@@ -1,0 +1,16 @@
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+main: net.justminecraft.prisons.PrisonsPlugin
+author: PureGero
+softdepend: [WorldEdit]
+commands:
+    spawn:
+        description: Prisons spawn command
+        permission: prisons.spawn
+    warp:
+        description: Prisons warp command
+        permission: prisons.warp
+permissions:
+    prisons.warp:
+        default: true
