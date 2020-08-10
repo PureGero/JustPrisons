@@ -26,6 +26,10 @@
             <id>purenetwork-repo</id>
             <url>https://github.com/PureGero/JustSkyblock/raw/dependencies/</url>
         </repository>
+        <repository>
+            <id>enginehub-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -39,6 +43,12 @@
                <groupId>puregero</groupId>
                <artifactId>purenetworkapi</artifactId>
                <version>1</version>
+               <scope>provided</scope>
+        </dependency>
+        <dependency>
+               <groupId>com.sk89q.worldedit</groupId>
+               <artifactId>worldedit-bukkit</artifactId>
+               <version>6.1</version>
                <scope>provided</scope>
         </dependency>
     </dependencies>
