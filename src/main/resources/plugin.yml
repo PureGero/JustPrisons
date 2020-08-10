@@ -5,6 +5,9 @@ main: net.justminecraft.prisons.PrisonsPlugin
 author: PureGero
 softdepend: [WorldEdit, PureNetwork]
 commands:
+    setupprisons:
+        description: Set up prisons
+        permission: prisons.setupprisons
     spawn:
         description: Prisons spawn command
         permission: prisons.spawn
@@ -12,5 +15,9 @@ commands:
         description: Prisons warp command
         permission: prisons.warp
 permissions:
+    prisons.setupprisons:
+        default: op
+    prisons.spawn:
+        default: true
     prisons.warp:
         default: true
