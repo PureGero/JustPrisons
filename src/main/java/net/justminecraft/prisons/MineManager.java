@@ -3,6 +3,7 @@ package net.justminecraft.prisons;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,13 +18,17 @@ public class MineManager extends GoogleSheet {
     public MineManager(PrisonsPlugin plugin) {
         super(plugin, "1ppUyeRFeEXgazITugzv0349xjk9MNEPQ7Hq3Y1Tw9yg");
 
-        world = plugin.getServer().createWorld(new WorldCreator("mines").generatorSettings("3;minecraft:air"));
+        world = plugin.getServer().createWorld(new WorldCreator("mines").type(WorldType.FLAT).generatorSettings("3;minecraft:air").generateStructures(false));
 
         nextOffset = new Location(world, 0, 0, 0);
     }
 
     public Collection<Mine> getMines() {
         return mines.values();
+    }
+
+    public Mine getMine(String name) {
+        return mines.get(name.toLowerCase());
     }
 
     public World getWorld() {
@@ -44,13 +49,15 @@ public class MineManager extends GoogleSheet {
         for (String line : getLines()) {
             String[] args = line.split(",");
 
-            if (args[0].equalsIgnoreCase("name")) {
+            String key = args[0].toLowerCase();
+
+            if (key.equals("name")) {
                 continue;
             }
 
-            if (!args[0].isEmpty()) {
-                mine = mines.computeIfAbsent(args[0], key -> new Mine(key, nextOffset.add(1000, 0, 0).clone()));
-                keys.add(args[0]);
+            if (!key.isEmpty()) {
+                mine = mines.computeIfAbsent(key, key2 -> new Mine(args[0], nextOffset.add(1000, 0, 0).clone()));
+                keys.add(key);
             }
 
             if (mine == null) {

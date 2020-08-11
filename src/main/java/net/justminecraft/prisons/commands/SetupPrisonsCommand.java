@@ -14,10 +14,10 @@ public class SetupPrisonsCommand implements CommandExecutor {
     public SetupPrisonsCommand(PrisonsPlugin plugin) {
         this.plugin = plugin;
 
-        PluginCommand spawnCommand = plugin.getCommand("setupprisons");
+        PluginCommand command = plugin.getCommand("setupprisons");
 
-        if (spawnCommand != null) {
-            spawnCommand.setExecutor(this);
+        if (command != null) {
+            command.setExecutor(this);
         }
     }
 

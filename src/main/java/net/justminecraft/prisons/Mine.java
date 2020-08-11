@@ -32,4 +32,8 @@ public class Mine {
     public Location getOffset() {
         return offset;
     }
+
+    public Location getRandomSpawnLocation() {
+        return spawnLocations.get((int) (Math.random() * spawnLocations.size()));
+    }
 }

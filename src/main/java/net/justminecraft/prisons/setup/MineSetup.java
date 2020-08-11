@@ -19,6 +19,8 @@ public class MineSetup implements Runnable {
         World world = prisonsSetup.getPlugin().getMineManager().getWorld();
 
         world.setGameRuleValue("doDaylightCycle", "false");
+        world.setGameRuleValue("doFireTick", "false");
+        world.setGameRuleValue("doMobSpawning", "false");
         world.setTime(6000);
 
         prisonsSetup.queue(this::clearMine);
@@ -30,6 +32,6 @@ public class MineSetup implements Runnable {
     }
 
     private void pasteMine() {
-        WorldEditUtil.pasteSchematic(mine.getName() + ".schematic", mine.getOffset().clone().add(0, mine.getBoundaries().get(0).getTo().getY(), 0));
+        WorldEditUtil.pasteSchematic(mine.getName() + ".schematic", mine.getOffset().clone().add(0, mine.getBoundaries().get(0).getTo().getY(), 32));
     }
 }

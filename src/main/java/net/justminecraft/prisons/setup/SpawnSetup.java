@@ -20,6 +20,8 @@ public class SpawnSetup implements Runnable {
 
         world.setSpawnLocation(0, 64, 0);
         world.setGameRuleValue("doDaylightCycle", "false");
+        world.setGameRuleValue("doFireTick", "false");
+        world.setGameRuleValue("doMobSpawning", "false");
         world.setTime(6000);
 
         spawn = world.getSpawnLocation();

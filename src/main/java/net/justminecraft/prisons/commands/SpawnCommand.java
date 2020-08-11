@@ -12,10 +12,10 @@ import org.bukkit.entity.Player;
 public class SpawnCommand implements CommandExecutor {
 
     public SpawnCommand(PrisonsPlugin plugin) {
-        PluginCommand spawnCommand = plugin.getCommand("spawn");
+        PluginCommand command = plugin.getCommand("spawn");
 
-        if (spawnCommand != null) {
-            spawnCommand.setExecutor(this);
+        if (command != null) {
+            command.setExecutor(this);
         }
     }
 
@@ -29,6 +29,8 @@ public class SpawnCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation().add(Math.random(), 0.5, Math.random()));
+
+        sender.sendMessage(ChatColor.GREEN + "Teleported to spawn.");
 
         return true;
     }
