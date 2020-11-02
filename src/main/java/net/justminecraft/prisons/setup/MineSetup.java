@@ -1,6 +1,6 @@
 package net.justminecraft.prisons.setup;
 
-import net.justminecraft.prisons.Mine;
+import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.WorldEditUtil;
 import org.bukkit.World;
 

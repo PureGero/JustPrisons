@@ -1,16 +1,16 @@
-package net.justminecraft.prisons;
+package net.justminecraft.prisons.mines;
 
 import org.bukkit.Location;
 
 public class MineBoundary {
     private final Location from;
     private final Location to;
-    private final double volume;
+    private final int volume;
 
     public MineBoundary(Location from, Location to) {
         this.from = from;
         this.to = to;
-        volume = (to.getX() - from.getX()) * (to.getY() - from.getY()) * (to.getZ() - from.getZ());
+        volume = (to.getBlockX() - from.getBlockX()) * (to.getBlockY() - from.getBlockY()) * (to.getBlockZ() - from.getBlockZ());
     }
 
     public Location getFrom() {
@@ -21,7 +21,7 @@ public class MineBoundary {
         return to;
     }
 
-    public double getVolume() {
+    public int getVolume() {
         return volume;
     }
 }

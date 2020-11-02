@@ -1,6 +1,6 @@
 package net.justminecraft.prisons.commands;
 
-import net.justminecraft.prisons.Mine;
+import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.PrisonsPlugin;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.*;

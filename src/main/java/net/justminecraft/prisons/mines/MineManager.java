@@ -1,9 +1,12 @@
-package net.justminecraft.prisons;
+package net.justminecraft.prisons.mines;
 
+import net.justminecraft.prisons.GoogleSheet;
+import net.justminecraft.prisons.PrisonsPlugin;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
+import org.bukkit.entity.Player;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,6 +21,8 @@ public class MineManager extends GoogleSheet {
     public MineManager(PrisonsPlugin plugin) {
         super(plugin, "1ppUyeRFeEXgazITugzv0349xjk9MNEPQ7Hq3Y1Tw9yg");
 
+        plugin.getServer().getPluginManager().registerEvents(new MineListener(this), plugin);
+
         world = plugin.getServer().createWorld(new WorldCreator("mines").type(WorldType.FLAT).generatorSettings("3;minecraft:air").generateStructures(false));
 
         nextOffset = new Location(world, 0, 0, 0);
@@ -29,6 +34,25 @@ public class MineManager extends GoogleSheet {
 
     public Mine getMine(String name) {
         return mines.get(name.toLowerCase());
+    }
+
+    public Mine getMine(Player player) {
+        if (player.getWorld() != world) {
+            return null;
+        }
+
+        double distance = Double.MAX_VALUE;
+        Mine closest = null;
+
+        for (Mine mine : mines.values()) {
+            double d = player.getLocation().distanceSquared(mine.getRandomSpawnLocation());
+            if (d < distance) {
+                distance = d;
+                closest = mine;
+            }
+        }
+
+        return closest;
     }
 
     public World getWorld() {
@@ -51,7 +75,7 @@ public class MineManager extends GoogleSheet {
 
             String key = args[0].toLowerCase();
 
-            if (key.equals("name")) {
+            if (key.equalsIgnoreCase("name")) {
                 continue;
             }
 
@@ -67,9 +91,9 @@ public class MineManager extends GoogleSheet {
             if (!args[1].isEmpty()) {
                 mine.getSpawnLocations().add(new Location(
                         world,
-                        Double.parseDouble(args[1]),
+                        Double.parseDouble(args[1]) + 0.5,
                         Double.parseDouble(args[2]),
-                        Double.parseDouble(args[3]),
+                        Double.parseDouble(args[3]) + 0.5,
                         Float.parseFloat(args[4]),
                         Float.parseFloat(args[5])
                 ).add(mine.getOffset()));
