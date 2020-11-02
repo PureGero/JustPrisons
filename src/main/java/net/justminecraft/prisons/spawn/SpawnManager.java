@@ -5,15 +5,15 @@ import org.bukkit.World;
 
 public class SpawnManager {
 
-    private World spawn;
+    private World world;
 
     public SpawnManager(PrisonsPlugin plugin) {
-        spawn = plugin.getServer().getWorlds().get(0);
+        world = plugin.getServer().getWorlds().get(0);
 
         plugin.getServer().getPluginManager().registerEvents(new SpawnListener(this), plugin);
     }
 
-    public World getSpawn() {
-        return spawn;
+    public World getWorld() {
+        return world;
     }
 }

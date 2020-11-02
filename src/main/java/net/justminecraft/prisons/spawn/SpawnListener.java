@@ -7,8 +7,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,7 +30,7 @@ public class SpawnListener implements Listener {
 
     @EventHandler
     public void onSpawn(PlayerSpawnLocationEvent event) {
-        event.setSpawnLocation(spawnManager.getSpawn().getSpawnLocation().add(Math.random(), 0, Math.random()));
+        event.setSpawnLocation(spawnManager.getWorld().getSpawnLocation().add(Math.random(), 0, Math.random()));
 
         event.getPlayer().setFoodLevel(20);
     }
@@ -61,6 +63,15 @@ public class SpawnListener implements Listener {
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        if (event.getClickedBlock() != null
+                && event.getClickedBlock().getWorld() == spawnManager.getWorld()
+                && (event.getItem() == null || !event.getItem().getType().isEdible() || event.getAction() != Action.RIGHT_CLICK_BLOCK)) {
             event.setCancelled(true);
         }
     }
