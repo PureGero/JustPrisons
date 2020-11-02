@@ -5,6 +5,7 @@ import net.justminecraft.prisons.commands.SpawnCommand;
 import net.justminecraft.prisons.commands.WarpCommand;
 import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.mines.MineManager;
+import net.justminecraft.prisons.spawn.SpawnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,6 +28,7 @@ public class PrisonsPlugin extends JavaPlugin {
         plugin = this;
 
         mineManager = new MineManager(this);
+        new SpawnManager(this);
 
         enableCommands();
 
