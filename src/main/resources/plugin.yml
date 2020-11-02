@@ -5,19 +5,25 @@ main: net.justminecraft.prisons.PrisonsPlugin
 author: PureGero
 softdepend: [WorldEdit, PureNetwork]
 commands:
-    setupprisons:
-        description: Set up prisons
-        permission: prisons.setupprisons
-    spawn:
-        description: Prisons spawn command
-        permission: prisons.spawn
-    warp:
-        description: Prisons warp command
-        permission: prisons.warp
+  balance:
+    description: Prisons balance command
+    aliases: [bal, money, tokens, coins]
+    permission: prisons.balance
+  setupprisons:
+    description: Set up prisons
+    permission: prisons.setupprisons
+  spawn:
+    description: Prisons spawn command
+    permission: prisons.spawn
+  warp:
+    description: Prisons warp command
+    permission: prisons.warp
 permissions:
-    prisons.setupprisons:
-        default: op
-    prisons.spawn:
-        default: true
-    prisons.warp:
-        default: true
+  prisons.balance:
+    default: true
+  prisons.setupprisons:
+    default: op
+  prisons.spawn:
+    default: true
+  prisons.warp:
+    default: true
