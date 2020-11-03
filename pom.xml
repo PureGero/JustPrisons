@@ -30,26 +30,44 @@
             <id>enginehub-repo</id>
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
+        <repository>
+            <id>BigDecimalMath-mvn-repo</id>
+            <url>https://raw.github.com/miraclefoxx/BigDecimalMath/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-               <groupId>org.spigotmc</groupId>
-               <artifactId>spigot</artifactId>
-               <version>1.8.8-R0.1-SNAPSHOT</version>
-               <scope>provided</scope>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20200518</version>
         </dependency>
         <dependency>
-               <groupId>puregero</groupId>
-               <artifactId>purenetworkapi</artifactId>
-               <version>1</version>
-               <scope>provided</scope>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-               <groupId>com.sk89q.worldedit</groupId>
-               <artifactId>worldedit-bukkit</artifactId>
-               <version>6.1</version>
-               <scope>provided</scope>
+            <groupId>puregero</groupId>
+            <artifactId>purenetworkapi</artifactId>
+            <version>1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>6.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.miraclefoxx</groupId>
+            <artifactId>bigdecimal-math</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
     
@@ -81,6 +99,40 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.json</pattern>
+                            <shadedPattern>${project.groupId}.json</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>io.github.miraclefoxx.math</pattern>
+                            <shadedPattern>${project.groupId}.rjm</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -59,6 +59,7 @@ public class PlayerScoreboard {
         String msg = entry.apply(PlayerDataManager.get(player));
         if (msg != null) {
             sidebar.getScore(msg).setScore(entry.getId());
+            lastMessages.put(entry.getId(), msg);
         }
     }
 

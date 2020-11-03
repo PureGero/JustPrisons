@@ -47,6 +47,24 @@ public enum Upgrade {
         return enchantment;
     }
 
+    public static BigInteger getLevel(ItemStack item, Upgrade upgrade) {
+        ItemMeta meta = item.getItemMeta();
+
+        List<String> lore = meta.getLore();
+
+        if (lore == null) {
+            return BigInteger.ZERO;
+        }
+
+        for (String line : lore) {
+            if (line.contains(upgrade.getName())) {
+                return new BigInteger(line.replaceAll("\\D+",""));
+            }
+        }
+
+        return BigInteger.ZERO;
+    }
+
     public static void setUpgrade(ItemStack item, Upgrade upgrade, BigInteger level) {
         ItemMeta meta = item.getItemMeta();
 
@@ -58,7 +76,7 @@ public enum Upgrade {
 
         lore.removeIf(line -> line.contains(upgrade.getName()));
 
-        lore.add(upgrade.getColor() + " +" + level.toString() + " " + upgrade.getName());
+        lore.add(String.format("%s +%d %s", upgrade.getColor(), level, upgrade.getName()));
 
         meta.setLore(lore);
 

@@ -1,7 +1,7 @@
 package net.justminecraft.prisons.playerdata;
 
 import net.justminecraft.prisons.PrisonsPlugin;
-import net.justminecraft.prisons.org.json.JSONObject;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;

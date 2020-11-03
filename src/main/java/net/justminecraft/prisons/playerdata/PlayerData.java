@@ -1,7 +1,10 @@
 package net.justminecraft.prisons.playerdata;
 
-import net.justminecraft.prisons.org.json.JSONObject;
+import net.justminecraft.prisons.Translate;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.util.UUID;
@@ -11,6 +14,7 @@ public class PlayerData {
     JSONObject object = new JSONObject();
 
     private PlayerScoreboard scoreboard = new PlayerScoreboard();
+    private long lastRankupReminder = 0;
 
     public void save() {
         PlayerDataSaver.save(this);
@@ -34,6 +38,26 @@ public class PlayerData {
     public void setTokens(BigInteger coins) {
         object.put("tokens", coins);
         scoreboard.update(PlayerScoreboardEntry.TOKENS);
+    }
+
+    public void giveTokens(BigInteger tokens, boolean important) {
+        setTokens(getTokens().add(tokens));
+
+        if (important || !object.has("stopTokenMessages") || object.getBoolean("stopTokenMessages")) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                Translate.sendMessage(player, "prisons.tokens.receive", tokens);
+            }
+        }
+    }
+
+    public BigInteger getBlocksBroken() {
+        if (!object.has("blocksBroken")) return BigInteger.ZERO;
+        return object.getBigInteger("blocksBroken");
+    }
+
+    public void setBlocksBroken(BigInteger blocksBroken) {
+        object.put("blocksBroken", blocksBroken);
     }
 
     public int getMulti() {
@@ -68,7 +92,7 @@ public class PlayerData {
         return scoreboard;
     }
 
-    private int getRank() {
+    public int getRank() {
         if (!object.has("rank")) return 0;
         return object.getInt("rank");
     }
@@ -92,5 +116,22 @@ public class PlayerData {
         if(getRank() < 26)
             return Character.toString((char) ('A' + (getRank() % 26)));
         return "P" + (getRank() - 25);
+    }
+
+    public long getLastRankupReminder() {
+        return lastRankupReminder;
+    }
+
+    public void setLastRankupReminder(long lastRankupReminder) {
+        this.lastRankupReminder = lastRankupReminder;
+    }
+
+    public BigInteger getLargestBlockCoinGain() {
+        if (!object.has("largestBlockCoinGain")) return BigInteger.ZERO;
+        return object.getBigInteger("largestBlockCoinGain");
+    }
+
+    public void setLargestBlockCoinGain(BigInteger largestBlockCoinGain) {
+        object.put("largestBlockCoinGain", largestBlockCoinGain);
     }
 }
