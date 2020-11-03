@@ -43,6 +43,7 @@ public class MineListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         Mine mine = mineManager.getMine(player);
+        ItemStack item = player.getItemInHand();
 
         if (mine == null) {
             return;
@@ -53,9 +54,14 @@ public class MineListener implements Listener {
             return;
         }
 
+        if (item != null && item.getType() == Material.DIAMOND_PICKAXE && item.getDurability() > 1561) {
+            player.sendMessage(ChatColor.RED + "Your pickaxe is out of durability! Please repair it!!!");
+            event.setCancelled(true);
+            return;
+        }
+
         PlayerData playerData = PlayerDataManager.get(player);
         playerData.setBlocksBroken(playerData.getBlocksBroken().add(BigInteger.ONE));
-        ItemStack item = player.getItemInHand();
 
         // Coins
         BigInteger coinGain = BigInteger.valueOf(MineOres.getBlockValue(event.getBlock().getType())).multiply(
@@ -132,5 +138,15 @@ public class MineListener implements Listener {
         event.getBlock().setType(Material.AIR);
 
         mine.onBlockBreak();
+
+        if (new BigDecimal(Upgrade.getLevel(item, Upgrade.UNBREAKING)).add(BigDecimal.ONE).multiply(BigDecimal.valueOf(Math.random())).compareTo(BigDecimal.ONE) < 0) {
+            item.setDurability((short) (item.getDurability() + 1));
+            if (item.getType() == Material.GOLD_PICKAXE && item.getDurability() > 32) {
+                player.getWorld().playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);
+                player.setItemInHand(null);
+            } else {
+                player.setItemInHand(item);
+            }
+        }
     }
 }
