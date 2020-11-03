@@ -44,11 +44,25 @@ public class PlayerData {
         setTokens(getTokens().add(tokens));
 
         if (important || !object.has("stopTokenMessages") || object.getBoolean("stopTokenMessages")) {
-            Player player = Bukkit.getPlayer(uuid);
-            if (player != null) {
-                Translate.sendMessage(player, "prisons.tokens.receive", tokens);
-            }
+            Translate.sendMessage(getPlayer(), "prisons.tokens.receive", tokens);
         }
+    }
+
+    public boolean takeTokens(BigInteger tokens) {
+        BigInteger newTokens = getTokens().subtract(tokens);
+
+        if (newTokens.compareTo(BigInteger.ZERO) < 0) {
+            Translate.sendMessage(getPlayer(), "prisons.tokens.notenough");
+            return false;
+        }
+
+        setTokens(newTokens);
+        Translate.sendMessage(getPlayer(), "prisons.tokens.take", tokens);
+        return true;
+    }
+
+    private Player getPlayer() {
+        return Bukkit.getPlayer(uuid);
     }
 
     public BigInteger getBlocksBroken() {

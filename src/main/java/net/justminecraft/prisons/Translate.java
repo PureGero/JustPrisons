@@ -1,6 +1,7 @@
 package net.justminecraft.prisons;
 
 import net.md_5.bungee.api.chat.TranslatableComponent;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.BufferedReader;
@@ -28,26 +29,49 @@ public class Translate {
         }
     }
 
-    private void send(Player player, String key, Object[] args) {
+    private String format(String key, Object[] args) {
         if (messages.containsKey(key)) {
             // We have a translation for that!
-            player.sendMessage(String.format(messages.get(key), args));
+            return String.format(messages.get(key), args);
         } else if (this != getDefault()) {
             // Fallback to en_us
-            getDefault().send(player, key, args);
+            return getDefault().format(key, args);
         } else {
+            // We don't have a translation for that in en_us
+            return null;
+        }
+    }
+
+    public static String formatMessage(CommandSender sender, String key, Object... args) {
+        String msg = getTranslate(sender).format(key, args);
+        return msg == null ? key : msg;
+    }
+
+    public static void sendMessage(CommandSender sender, String key, Object... args) {
+        if (sender == null) return;
+
+        String msg = getTranslate(sender).format(key, args);
+
+        if (msg == null) {
             // Assume it's a mojang translation
             TranslatableComponent component = new TranslatableComponent(key);
             for (Object arg : args) {
                 component.addWith(arg.toString());
             }
-            player.spigot().sendMessage(component);
+            if (sender instanceof Player) {
+                ((Player) sender).spigot().sendMessage(component);
+            } else {
+                sender.sendMessage(key);
+            }
+            return;
         }
+
+        sender.sendMessage(msg);
     }
 
-    public static void sendMessage(Player player, String key, Object... args) {
+    private static Translate getTranslate(CommandSender sender) {
         // TODO Translate chat messages based on locale
-        getDefault().send(player, key, args);
+        return getDefault();
     }
 
     private static Translate getDefault() {

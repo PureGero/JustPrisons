@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class MineListener implements Listener {
-    private static final int TOKEN_MULTIPLIER = 2;
+    public static final int TOKEN_MULTIPLIER = 2;
     private final MineManager mineManager;
 
     public MineListener(MineManager mineManager) {
