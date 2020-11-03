@@ -17,8 +17,8 @@ public class PlayerDataManager {
         // Register PlayerDataListener
         plugin.getServer().getPluginManager().registerEvents(new PlayerDataListener(), plugin);
 
-        // Load all the online players
-        Bukkit.getOnlinePlayers().forEach(PlayerDataManager::get);
+        // Load all the online players and show their scoreboard
+        Bukkit.getOnlinePlayers().forEach(player -> PlayerDataManager.get(player).getScoreboard().show(player));
     }
 
     public static PlayerData get(Player player) {
