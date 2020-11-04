@@ -9,6 +9,12 @@ commands:
     description: Prisons balance command
     aliases: [bal, money, tokens, coins]
     permission: prisons.balance
+  prestige:
+    description: Prisons prestige command
+    permission: prisons.prestige
+  rankup:
+    description: Prisons rankup command
+    permission: prisons.rankup
   setupprisons:
     description: Set up prisons
     permission: prisons.setupprisons
@@ -20,6 +26,10 @@ commands:
     permission: prisons.warp
 permissions:
   prisons.balance:
+    default: true
+  prisons.prestige:
+    default: true
+  prisons.rankup:
     default: true
   prisons.setupprisons:
     default: op

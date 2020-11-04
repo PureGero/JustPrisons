@@ -118,6 +118,18 @@ public class PlayerData {
         return object.getInt("rank");
     }
 
+    public void setRank(int rank) {
+        object.put("rank", rank);
+
+        updatePermissions();
+
+        getScoreboard().updateTitle();
+
+        for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
+            PlayerDataManager.get(otherPlayer).getScoreboard().updateRank(getPlayer());
+        }
+    }
+
     public ChatColor getRankColor() {
         int prestige = getRank() - 25;
         if (prestige >= 500)

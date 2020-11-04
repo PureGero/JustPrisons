@@ -1,6 +1,7 @@
 package net.justminecraft.prisons;
 
 import net.md_5.bungee.api.chat.TranslatableComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,7 +21,7 @@ public class Translate {
             while ((line = reader.readLine()) != null) {
                 if (line.indexOf('=') > 0) {
                     String key = line.substring(0, line.indexOf('='));
-                    String value = line.substring(line.indexOf('=') + 1);
+                    String value = line.substring(line.indexOf('=') + 1).replace("\\n", "\n");
                     messages.put(key, value);
                 }
             }
@@ -67,6 +68,10 @@ public class Translate {
         }
 
         sender.sendMessage(msg);
+    }
+
+    public static void broadcastMessage(String key, Object... args) {
+        Bukkit.getOnlinePlayers().forEach(player -> sendMessage(player, key, args));
     }
 
     private static Translate getTranslate(CommandSender sender) {
