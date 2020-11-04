@@ -4,6 +4,7 @@ import net.justminecraft.prisons.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
@@ -148,4 +149,23 @@ public class PlayerData {
     public void setLargestBlockCoinGain(BigInteger largestBlockCoinGain) {
         object.put("largestBlockCoinGain", largestBlockCoinGain);
     }
+
+    public JSONArray getItems() {
+        if (!object.has("items")) return null;
+        return object.getJSONArray("items");
+    }
+
+    public void removeItems() {
+        object.remove("items");
+    }
+
+    public JSONArray getEnderChest() {
+        if (!object.has("enderChest")) return null;
+        return object.getJSONArray("enderChest");
+    }
+
+    public void removeEnderChest() {
+        object.remove("enderChest");
+    }
+
 }

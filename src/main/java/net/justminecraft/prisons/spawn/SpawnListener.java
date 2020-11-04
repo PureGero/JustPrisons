@@ -71,7 +71,8 @@ public class SpawnListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null
                 && event.getClickedBlock().getWorld() == spawnManager.getWorld()
-                && (event.getItem() == null || !event.getItem().getType().isEdible() || event.getAction() != Action.RIGHT_CLICK_BLOCK)) {
+                && (event.getItem() == null || !event.getItem().getType().isEdible() || event.getAction() != Action.RIGHT_CLICK_BLOCK)
+                && event.getClickedBlock().getType() != Material.ENDER_CHEST) {
             event.setCancelled(true);
         }
     }

@@ -1,5 +1,6 @@
 package net.justminecraft.prisons.playerdata;
 
+import net.justminecraft.prisons.inventory.LegacyInventoryConverter;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,6 +20,9 @@ public class PlayerDataListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         // Show the scoreboard
         PlayerDataManager.get(event.getPlayer()).getScoreboard().show(event.getPlayer());
+
+        // Check for a legacy inventory to convert
+        LegacyInventoryConverter.doConversion(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
