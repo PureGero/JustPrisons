@@ -119,6 +119,7 @@ public class SpawnListener implements Listener {
             starterPickaxe.setItemMeta(meta);
 
             Upgrade.setUpgrade(starterPickaxe, Upgrade.EFFICIENCY, BigInteger.TEN);
+            Upgrade.setUpgrade(starterPickaxe, Upgrade.UNBREAKING, BigInteger.ONE);
 
             event.getPlayer().getInventory().addItem(starterPickaxe);
         }
