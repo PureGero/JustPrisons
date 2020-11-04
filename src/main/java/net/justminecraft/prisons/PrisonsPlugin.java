@@ -49,6 +49,7 @@ public class PrisonsPlugin extends JavaPlugin {
     private void enableCommands() {
         new BalanceCommand(this);
         new KeyListener(this);
+        new PrestigeCommand(this);
         new RankupCommand(this);
         new SetupPrisonsCommand(this);
         new SpawnCommand(this);
