@@ -78,7 +78,7 @@ public class MineListener implements Listener {
         // Coins
         BigInteger coinGain = BigInteger.valueOf(MineOres.getBlockValue(event.getBlock().getType())).multiply(
                 item == null ? BigInteger.ONE : Upgrade.getLevel(item, Upgrade.FORTUNE).divide(BigInteger.valueOf(3)).add(BigInteger.ONE));
-        playerData.setCoins(playerData.getCoins().add(coinGain));
+        playerData.setCoins(playerData.getCoins().add(coinGain.multiply(BigInteger.valueOf(playerData.getMulti()))));
 
         // Remind new players to do /rankup
         if (playerData.getRank() == 0
