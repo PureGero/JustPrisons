@@ -17,8 +17,10 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.math.BigDecimal;
@@ -30,6 +32,21 @@ public class MineListener implements Listener {
 
     public MineListener(MineManager mineManager) {
         this.mineManager = mineManager;
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        Mine mine = mineManager.getMine(player);
+
+        if (mine == null || event.getClickedBlock() == null
+                || (event.getItem() != null && event.getItem().getType().isEdible() && event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            return;
+        }
+
+        if (!mine.inMine(event.getClickedBlock())) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -46,11 +63,6 @@ public class MineListener implements Listener {
         ItemStack item = player.getItemInHand();
 
         if (mine == null) {
-            return;
-        }
-
-        if (!mine.inMine(event.getBlock())) {
-            event.setCancelled(true);
             return;
         }
 
