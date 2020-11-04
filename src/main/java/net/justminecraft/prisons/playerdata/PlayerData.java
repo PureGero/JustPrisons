@@ -44,7 +44,7 @@ public class PlayerData {
     public void giveTokens(BigInteger tokens, boolean important) {
         setTokens(getTokens().add(tokens));
 
-        if (important || !object.has("stopTokenMessages") || object.getBoolean("stopTokenMessages")) {
+        if (important || !object.has("stopTokenMessages") || !object.getBoolean("stopTokenMessages")) {
             Translate.sendMessage(getPlayer(), "prisons.tokens.receive", tokens);
         }
     }
@@ -60,6 +60,11 @@ public class PlayerData {
         setTokens(newTokens);
         Translate.sendMessage(getPlayer(), "prisons.tokens.take", tokens);
         return true;
+    }
+
+    public boolean getStopKeyUseMessages() {
+        if (!object.has("stopKeyUseMessages")) return false;
+        return object.getBoolean("stopKeyUseMessages");
     }
 
     private Player getPlayer() {

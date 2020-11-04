@@ -110,11 +110,11 @@ public class MineListener implements Listener {
                 tokensLarge = tokensLarge.multiply(new BigDecimal(Upgrade.getLevel(item, Upgrade.CHARITY)).multiply(BigDecimal.valueOf(0.2)).add(BigDecimal.ONE));
                 for (Player receiver : Bukkit.getOnlinePlayers()) {
                     if (receiver != player) {
-                        Translate.sendMessage(receiver, "prisons.charity.broadcast", tokensSmall, player.getName(), tokensLarge);
+                        Translate.sendMessage(receiver, "prisons.charity.broadcast", tokensSmall.toBigInteger(), player.getName(), tokensLarge.toBigInteger());
                         PlayerDataManager.get(receiver).giveTokens(tokensSmall.toBigInteger(), false);
                     }
                 }
-                Translate.sendMessage(player, "prisons.charity.broadcast", tokensSmall, player.getName(), tokensLarge);
+                Translate.sendMessage(player, "prisons.charity.broadcast", tokensSmall.toBigInteger(), player.getName(), tokensLarge.toBigInteger());
                 PlayerDataManager.get(player).giveTokens(tokensLarge.toBigInteger(), true);
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
             }

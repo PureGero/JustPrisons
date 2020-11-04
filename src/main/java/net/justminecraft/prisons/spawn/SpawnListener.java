@@ -3,6 +3,7 @@ package net.justminecraft.prisons.spawn;
 import net.justminecraft.prisons.inventory.Upgrade;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,7 +70,8 @@ public class SpawnListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getClickedBlock() != null
+        if (event.getPlayer().getGameMode() != GameMode.CREATIVE
+                && event.getClickedBlock() != null
                 && event.getClickedBlock().getWorld() == spawnManager.getWorld()
                 && (event.getItem() == null || !event.getItem().getType().isEdible() || event.getAction() != Action.RIGHT_CLICK_BLOCK)
                 && event.getClickedBlock().getType() != Material.ENDER_CHEST) {

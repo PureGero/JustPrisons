@@ -4,6 +4,7 @@ import net.justminecraft.prisons.commands.BalanceCommand;
 import net.justminecraft.prisons.commands.SetupPrisonsCommand;
 import net.justminecraft.prisons.commands.SpawnCommand;
 import net.justminecraft.prisons.commands.WarpCommand;
+import net.justminecraft.prisons.inventory.KeyListener;
 import net.justminecraft.prisons.inventory.UpgradeGuiListener;
 import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.mines.MineManager;
@@ -48,6 +49,7 @@ public class PrisonsPlugin extends JavaPlugin {
 
     private void enableCommands() {
         new BalanceCommand(this);
+        new KeyListener(this);
         new SetupPrisonsCommand(this);
         new SpawnCommand(this);
         new WarpCommand(this);
