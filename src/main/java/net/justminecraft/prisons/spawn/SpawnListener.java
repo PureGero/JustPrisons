@@ -1,6 +1,7 @@
 package net.justminecraft.prisons.spawn;
 
 import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.inventory.Multi;
 import net.justminecraft.prisons.inventory.Upgrade;
 import net.justminecraft.prisons.playerdata.PlayerData;
 import net.justminecraft.prisons.playerdata.PlayerDataManager;
@@ -122,6 +123,8 @@ public class SpawnListener implements Listener {
             Upgrade.setUpgrade(starterPickaxe, Upgrade.UNBREAKING, BigInteger.ONE);
 
             event.getPlayer().getInventory().addItem(starterPickaxe);
+
+            Multi.giveMulti(5, event.getPlayer());
         }
     }
 
