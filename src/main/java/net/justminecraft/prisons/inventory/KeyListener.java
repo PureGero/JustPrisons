@@ -1,11 +1,10 @@
 package net.justminecraft.prisons.inventory;
 
 import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.spawn.SpawnListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -29,21 +28,8 @@ public class KeyListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
         for (Map.Entry<String, Location> entry : keyChests.entrySet()) {
-            summonArmourStand(entry.getKey(), entry.getValue().clone().add(0.5, -1, 0.5));
+            SpawnListener.summonArmourStand(entry.getKey(), entry.getValue().clone().add(0.5, -1, 0.5));
         }
-    }
-
-    private void summonArmourStand(String name, Location location) {
-        for (Entity entity : location.getWorld().getEntities()) {
-            if (name.equals(entity.getCustomName())) {
-                entity.remove();
-            }
-        }
-
-        ArmorStand armorStand = location.getWorld().spawn(location, ArmorStand.class);
-        armorStand.setCustomName(name);
-        armorStand.setCustomNameVisible(true);
-        armorStand.setVisible(false);
     }
 
     @EventHandler

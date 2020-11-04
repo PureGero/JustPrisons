@@ -25,6 +25,9 @@ public class PlayerDataListener implements Listener {
 
         // Check for a legacy inventory to convert
         LegacyInventoryConverter.doConversion(event.getPlayer());
+
+        // Update permissions
+        PlayerDataManager.get(event.getPlayer()).updatePermissions();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

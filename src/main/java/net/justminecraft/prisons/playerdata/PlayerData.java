@@ -1,5 +1,6 @@
 package net.justminecraft.prisons.playerdata;
 
+import net.justminecraft.prisons.PrisonsPlugin;
 import net.justminecraft.prisons.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -177,4 +178,15 @@ public class PlayerData {
         object.remove("enderChest");
     }
 
+    public void updatePermissions() {
+        Player player = getPlayer();
+        int rank = getRank();
+
+        for (int i = 0; i <= rank && i < 26; i++) {
+            String permission = "prisons." + (char) ('a' + i);
+            if (!player.hasPermission(permission)) {
+                player.addAttachment(PrisonsPlugin.getPlugin(), permission, true);
+            }
+        }
+    }
 }

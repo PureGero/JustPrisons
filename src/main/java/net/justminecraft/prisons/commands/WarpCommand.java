@@ -1,7 +1,7 @@
 package net.justminecraft.prisons.commands;
 
-import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.mines.Mine;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -44,6 +44,11 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
         }
 
         Player player = (Player) sender;
+
+        if (!sender.hasPermission("prisons." + mine.getName().toLowerCase())) {
+            sender.sendMessage(ChatColor.RED + "You do not have access to warp '" + args[0] + "'.");
+            return false;
+        }
 
         player.teleport(mine.getRandomSpawnLocation());
 
