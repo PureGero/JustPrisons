@@ -19,7 +19,9 @@ public class UpgradeGuiListener implements Listener {
             event.setCancelled(true);
 
             if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof UpgradeGui) {
-                ((UpgradeGui) event.getClickedInventory().getHolder()).onClick(event.getSlot());
+                for (int i = 0; i < (event.isShiftClick() ? 10 : 1); i++) {
+                    ((UpgradeGui) event.getClickedInventory().getHolder()).onClick(event.getSlot());
+                }
             }
         }
     }
