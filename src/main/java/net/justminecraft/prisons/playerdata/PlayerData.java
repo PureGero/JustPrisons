@@ -138,6 +138,10 @@ public class PlayerData {
         return "P" + (getRank() - 25);
     }
 
+    public String getRankPrefix() {
+        return String.format("%s[%s] ", getRankColor(), getRankText());
+    }
+
     public long getLastRankupReminder() {
         return lastRankupReminder;
     }

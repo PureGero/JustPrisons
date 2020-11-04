@@ -102,9 +102,9 @@ public class Key {
         if (meta.getDisplayName().equalsIgnoreCase(LEGENDARY_KEY)) {
             while (Math.random() < 0.05)
                 giveEpicKey(player);
-            if (Math.random() < 0.01)
+            if (Math.random() < 0.01 || Upgrade.getLevel(item, Upgrade.RANKUP_TOKENS).compareTo(BigInteger.valueOf(5)) == 0)
                 Multi.giveMulti(40, player);
-            else if (Math.random() < 0.01)
+            else if (Math.random() < 0.01 || Upgrade.getLevel(item, Upgrade.RANKUP_TOKENS).compareTo(BigInteger.valueOf(20)) == 0)
                 Multi.giveMulti(50, player);
             if (Math.random() < 0.1)
                 Pickaxe.giveLegendPickAxe(player);

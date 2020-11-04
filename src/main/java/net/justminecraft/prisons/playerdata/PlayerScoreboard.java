@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 
@@ -26,6 +27,11 @@ public class PlayerScoreboard {
         updateAll();
 
         player.setScoreboard(scoreboard);
+
+        for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
+            updateRank(otherPlayer);
+            PlayerDataManager.get(otherPlayer).getScoreboard().updateRank(player);
+        }
     }
 
     private void updateAll() {
@@ -61,6 +67,23 @@ public class PlayerScoreboard {
             sidebar.getScore(msg).setScore(entry.getId());
             lastMessages.put(entry.getId(), msg);
         }
+    }
+
+    public void updateRank(Player player) {
+        if (scoreboard == null) {
+            // Scoreboard hasn't been loaded yet
+            return;
+        }
+
+        PlayerData data = PlayerDataManager.get(player);
+        Team team = scoreboard.getTeam(data.getRankText());
+
+        if (team == null) {
+            team = scoreboard.registerNewTeam(data.getRankText());
+            team.setPrefix(data.getRankPrefix());
+        }
+
+        team.addEntry(player.getName());
     }
 
 }
