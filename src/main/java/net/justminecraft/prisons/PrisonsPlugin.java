@@ -6,6 +6,7 @@ import net.justminecraft.prisons.commands.SpawnCommand;
 import net.justminecraft.prisons.commands.WarpCommand;
 import net.justminecraft.prisons.inventory.KeyListener;
 import net.justminecraft.prisons.inventory.UpgradeGuiListener;
+import net.justminecraft.prisons.inventory.VoteListener;
 import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.mines.MineManager;
 import net.justminecraft.prisons.playerdata.PlayerDataManager;
@@ -36,6 +37,7 @@ public class PrisonsPlugin extends JavaPlugin {
         new PlayerDataManager(this);
         new SpawnManager(this);
         new UpgradeGuiListener(this);
+        new VoteListener(this);
 
         enableCommands();
 

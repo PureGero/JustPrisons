@@ -35,7 +35,6 @@
             <url>https://raw.github.com/miraclefoxx/BigDecimalMath/mvn-repo/</url>
             <snapshots>
                 <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
     </repositories>

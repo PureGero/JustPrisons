@@ -1,6 +1,7 @@
 package net.justminecraft.prisons.inventory;
 
 import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.Translate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import puregero.network.VoteEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
