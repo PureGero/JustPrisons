@@ -114,6 +114,11 @@ public class UpgradeGui implements InventoryHolder {
     }
 
     private void upgrade(int i, Upgrade upgrade) {
+        if (upgrade == Upgrade.SPEED_BOOST && Upgrade.getLevel(upgrading, upgrade).compareTo(BigInteger.valueOf(3)) >= 0) {
+            player.sendMessage(ChatColor.RED + "You have reached the maximum level for speed!");
+            return;
+        }
+
         if (PlayerDataManager.get(player).takeTokens(upgrade.getCost(Upgrade.getLevel(upgrading, upgrade)))) {
             Upgrade.setUpgrade(upgrading, upgrade, Upgrade.getLevel(upgrading, upgrade).add(BigInteger.ONE));
             setItem();
