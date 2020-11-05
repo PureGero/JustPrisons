@@ -27,6 +27,9 @@ commands:
   stopkeyusemessages:
     description: Prisons stopkeyusemessages command
     permission: prisons.stopkeyusemessages
+  stoptokenmessages:
+    description: Prisons stoptokenmessages command
+    permission: prisons.stoptokenmessages
   warp:
     description: Prisons warp command
     permission: prisons.warp
@@ -44,6 +47,8 @@ permissions:
   prisons.stopkeymessages:
     default: true
   prisons.stopkeyusemessages:
+    default: true
+  prisons.stoptokenmessages:
     default: true
   prisons.warp:
     default: true
