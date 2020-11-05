@@ -96,7 +96,11 @@ public class UpgradeGui implements InventoryHolder {
     private void setUpgrade(int i, Upgrade upgrade) {
         ItemStack item = new ItemStack(upgrade.getIcon());
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(upgrade.getColor().toString() + ChatColor.BOLD + "+1 " + upgrade.getName());
+        meta.setDisplayName(String.format("%s%s+%,d %s",
+                upgrade.getColor(),
+                ChatColor.BOLD,
+                Upgrade.getLevel(upgrading, upgrade).add(BigInteger.ONE),
+                upgrade.getName()));
 
         ArrayList<String> lore = new ArrayList<>();
         lore.add(Translate.formatMessage(player, "prisons.upgrade.cost", upgrade.getCost(Upgrade.getLevel(upgrading, upgrade))));
