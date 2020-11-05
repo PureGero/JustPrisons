@@ -63,9 +63,31 @@ public class PlayerData {
         return true;
     }
 
+    public boolean getStopKeyMessages() {
+        if (!object.has("stopKeyMessages")) return false;
+        return object.getBoolean("stopKeyMessages");
+    }
+
+    public void setStopKeyMessages(boolean stopKeyMessages) {
+        object.put("stopKeyMessages", stopKeyMessages);
+    }
+
     public boolean getStopKeyUseMessages() {
         if (!object.has("stopKeyUseMessages")) return false;
         return object.getBoolean("stopKeyUseMessages");
+    }
+
+    public void setStopKeyUseMessages(boolean stopKeyUseMessages) {
+        object.put("stopKeyUseMessages", stopKeyUseMessages);
+    }
+
+    public boolean getStopTokenMessages() {
+        if (!object.has("stopTokenMessages")) return false;
+        return object.getBoolean("stopTokenMessages");
+    }
+
+    public void setStopTokenMessages(boolean stopTokenMessages) {
+        object.put("stopTokenMessages", stopTokenMessages);
     }
 
     private Player getPlayer() {

@@ -40,6 +40,7 @@ public class Key {
     }
 
     private static void giveKey(Player player, String key) {
+        PlayerData data = PlayerDataManager.get(player);
         ItemStack item = new ItemStack(Material.TRIPWIRE_HOOK);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(key);
@@ -50,9 +51,13 @@ public class Key {
         }
 
         if (player.getInventory().addItem(item).size() == 0) {
-            Translate.sendMessage(player, "prisons.keys.receive", key.substring(0, 2), key);
+            if (!data.getStopKeyMessages()) {
+                Translate.sendMessage(player, "prisons.keys.receive", key.substring(0, 2), key);
+            }
         } else {
-            Translate.sendMessage(player, "prisons.keys.use", key.substring(0, 2), key);
+            if (!data.getStopKeyUseMessages()) {
+                Translate.sendMessage(player, "prisons.keys.use", key.substring(0, 2), key);
+            }
             useKey(player, item);
         }
     }

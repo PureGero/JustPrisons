@@ -21,6 +21,12 @@ commands:
   spawn:
     description: Prisons spawn command
     permission: prisons.spawn
+  stopkeymessages:
+    description: Prisons stopkeymessages command
+    permission: prisons.stopkeymessages
+  stopkeyusemessages:
+    description: Prisons stopkeyusemessages command
+    permission: prisons.stopkeyusemessages
   warp:
     description: Prisons warp command
     permission: prisons.warp
@@ -34,6 +40,10 @@ permissions:
   prisons.setupprisons:
     default: op
   prisons.spawn:
+    default: true
+  prisons.stopkeymessages:
+    default: true
+  prisons.stopkeyusemessages:
     default: true
   prisons.warp:
     default: true

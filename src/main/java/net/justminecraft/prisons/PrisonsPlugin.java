@@ -53,6 +53,9 @@ public class PrisonsPlugin extends JavaPlugin {
         new RankupCommand(this);
         new SetupPrisonsCommand(this);
         new SpawnCommand(this);
+        new StopKeyMessagesCommand(this);
+        new StopKeyUseMessagesCommand(this);
+        new StopTokenMessagesCommand(this);
         new WarpCommand(this);
     }
 
