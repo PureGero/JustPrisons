@@ -122,6 +122,10 @@ public enum Upgrade {
     public static BigInteger getLevel(ItemStack item, Upgrade upgrade) {
         ItemMeta meta = item.getItemMeta();
 
+        if (meta == null) {
+            return BigInteger.ZERO;
+        }
+
         List<String> lore = meta.getLore();
 
         if (lore == null) {

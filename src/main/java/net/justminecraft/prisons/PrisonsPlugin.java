@@ -31,6 +31,7 @@ public class PrisonsPlugin extends JavaPlugin {
         mineManager = new MineManager(this);
         new MultiListener(this);
         new MultiTimer(this);
+        new PickaxeTimer(this);
         new PlayerDataManager(this);
         new SpawnManager(this);
         new UpgradeGuiListener(this);
