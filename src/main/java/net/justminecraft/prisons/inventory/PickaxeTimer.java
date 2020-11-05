@@ -27,7 +27,7 @@ public class PickaxeTimer implements Runnable {
 
             if (speedBoost > 0) {
                 player.removePotionEffect(PotionEffectType.SPEED);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, speedBoost - 1));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, speedBoost - 1, true, false));
             }
         }
     }
