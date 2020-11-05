@@ -146,7 +146,9 @@ public class MineListener implements Listener {
         }
 
         event.setExpToDrop(0);
-        event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, event.getBlock().getType());
+        for (Player otherPlayer : event.getBlock().getWorld().getPlayers()) {
+            otherPlayer.playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, event.getBlock().getType());
+        }
         event.getBlock().setType(Material.AIR);
 
         mine.onBlockBreak();
