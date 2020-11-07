@@ -146,7 +146,8 @@ public class SpawnListener implements Listener {
                 && event.getClickedBlock() != null
                 && event.getClickedBlock().getWorld() == spawnManager.getWorld()
                 && (event.getItem() == null || !event.getItem().getType().isEdible() || event.getAction() != Action.RIGHT_CLICK_BLOCK)
-                && event.getClickedBlock().getType() != Material.ENDER_CHEST) {
+                && event.getClickedBlock().getType() != Material.ENDER_CHEST
+                && event.getClickedBlock().getType() != Material.CHEST) {
             event.setCancelled(true);
         }
     }
