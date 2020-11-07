@@ -14,10 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
@@ -158,6 +155,14 @@ public class SpawnListener implements Listener {
     public void onKick(PlayerKickEvent event) {
         if (event.getReason().equalsIgnoreCase("disconnect.spam")) {
             // Disable vanilla's disconnect for spamming tab completion (an issue for 1.13+ clients)
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onThrowItem(PlayerDropItemEvent event) {
+        if (event.getItemDrop().getItemStack() != null && event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE) {
+            event.getPlayer().sendMessage(ChatColor.RED + "You cannot throw your pick");
             event.setCancelled(true);
         }
     }

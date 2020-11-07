@@ -74,7 +74,7 @@ public class MultiCombineGui implements ClickableInventoryHolder {
                             }
 
                             inventory.setItem(i, item);
-                            
+
                             if (taken == COMBINE_NUMBER) {
                                 // Add the new multi
                                 for (ItemStack multi : inventory.addItem(Multi.createMulti(value + 5)).values()) {
