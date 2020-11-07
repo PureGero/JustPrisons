@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -149,6 +150,14 @@ public class SpawnListener implements Listener {
                 && event.getClickedBlock().getWorld() == spawnManager.getWorld()
                 && (event.getItem() == null || !event.getItem().getType().isEdible() || event.getAction() != Action.RIGHT_CLICK_BLOCK)
                 && event.getClickedBlock().getType() != Material.ENDER_CHEST) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onKick(PlayerKickEvent event) {
+        if (event.getReason().equalsIgnoreCase("disconnect.spam")) {
+            // Disable vanilla's disconnect for spamming tab completion (an issue for 1.13+ clients)
             event.setCancelled(true);
         }
     }
