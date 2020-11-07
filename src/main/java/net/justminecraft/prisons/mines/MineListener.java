@@ -100,12 +100,14 @@ public class MineListener implements Listener {
 
         // Tokens
         BigDecimal chance = BigDecimalMath.pow(BigDecimal.valueOf(1.001), new BigDecimal(Upgrade.getLevel(item, Upgrade.LUCK).add(BigInteger.valueOf(5))).multiply(BigDecimal.valueOf(-1)));
-        if (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
+        while (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
             BigDecimal tokens = new BigDecimal(Upgrade.getLevel(item, Upgrade.LOOTING))
                     .multiply(BigDecimal.valueOf(Math.random() * 5))
                     .add(BigDecimal.valueOf(5))
                     .multiply(BigDecimal.valueOf(TOKEN_MULTIPLIER));
             playerData.giveTokens(tokens.toBigInteger(), false);
+
+            chance = chance.multiply(BigDecimal.TEN);
         }
 
         // Charity
