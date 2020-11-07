@@ -38,7 +38,7 @@ public class PlayerDataListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
-        event.setFormat(event.getFormat().replace("%1$s", PlayerDataManager.get(event.getPlayer()).getRankPrefix() + "%1$s" + ChatColor.RESET));
+        event.setFormat(event.getFormat().replace("%1$s", PlayerDataManager.get(event.getPlayer()).getRankPrefix() + PlayerDataManager.get(event.getPlayer()).getRankColor() + "%1$s" + ChatColor.RESET));
     }
 
 }
