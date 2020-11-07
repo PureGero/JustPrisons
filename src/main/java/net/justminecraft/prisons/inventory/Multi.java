@@ -13,6 +13,15 @@ import java.util.Collections;
 
 public class Multi {
     public static void giveMulti(int multi, Player player) {
+        ItemStack item = createMulti(multi);
+        ItemMeta meta = item.getItemMeta();
+
+        if (player.getInventory().addItem(item).size() == 0) {
+            Translate.sendMessage(player, "prisons.keys.receive", meta.getDisplayName().substring(0, 2), meta.getDisplayName());
+        }
+    }
+
+    public static ItemStack createMulti(int multi) {
         ItemStack item = new ItemStack(Material.GOLDEN_APPLE, 1, (short) 1);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + multi + "x Multi");
@@ -20,8 +29,6 @@ public class Multi {
         item.setItemMeta(meta);
         item.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, multi);
 
-        if (player.getInventory().addItem(item).size() == 0) {
-            Translate.sendMessage(player, "prisons.keys.receive", meta.getDisplayName().substring(0, 2), meta.getDisplayName());
-        }
+        return item;
     }
 }

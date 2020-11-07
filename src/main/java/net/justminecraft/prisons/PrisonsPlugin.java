@@ -6,6 +6,7 @@ import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.mines.MineManager;
 import net.justminecraft.prisons.playerdata.PlayerDataManager;
 import net.justminecraft.prisons.spawn.SpawnManager;
+import net.justminecraft.prisons.villager.VillagerShopManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,6 +37,7 @@ public class PrisonsPlugin extends JavaPlugin {
         new SpawnManager(this);
         new UpgradeGuiListener(this);
         new VoteListener(this);
+        new VillagerShopManager(this);
 
         enableCommands();
 
