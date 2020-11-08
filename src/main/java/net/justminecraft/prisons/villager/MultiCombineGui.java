@@ -1,11 +1,11 @@
 package net.justminecraft.prisons.villager;
 
 import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.inventory.InventoryUtil;
 import net.justminecraft.prisons.inventory.Multi;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -78,9 +78,7 @@ public class MultiCombineGui implements ClickableInventoryHolder {
                             if (taken == COMBINE_NUMBER) {
                                 // Add the new multi
                                 for (ItemStack multi : inventory.addItem(Multi.createMulti(value + 5)).values()) {
-                                    for (ItemStack multi2 : player.getInventory().addItem(multi).values()) {
-                                        dropItem(multi2);
-                                    }
+                                    InventoryUtil.giveItem(player, multi);
                                 }
 
                                 // Do another combine later
@@ -100,13 +98,6 @@ public class MultiCombineGui implements ClickableInventoryHolder {
 
         items.removeIf(Objects::isNull);
 
-        for (ItemStack itemStack : player.getInventory().addItem(items.toArray(new ItemStack[0])).values()) {
-            dropItem(itemStack);
-        }
-    }
-
-    private void dropItem(ItemStack itemStack) {
-        Item item = player.getWorld().dropItem(player.getEyeLocation(), itemStack);
-        item.setVelocity(player.getEyeLocation().getDirection().multiply(0.3));
+        InventoryUtil.giveItem(player, items.toArray(new ItemStack[0]));
     }
 }

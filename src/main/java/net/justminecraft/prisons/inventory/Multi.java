@@ -16,9 +16,9 @@ public class Multi {
         ItemStack item = createMulti(multi);
         ItemMeta meta = item.getItemMeta();
 
-        if (player.getInventory().addItem(item).size() == 0) {
-            Translate.sendMessage(player, "prisons.keys.receive", meta.getDisplayName().substring(0, 2), meta.getDisplayName());
-        }
+        InventoryUtil.giveItem(player, item);
+
+        Translate.sendMessage(player, "prisons.keys.receive", meta.getDisplayName().substring(0, 2), meta.getDisplayName());
     }
 
     public static ItemStack createMulti(int multi) {

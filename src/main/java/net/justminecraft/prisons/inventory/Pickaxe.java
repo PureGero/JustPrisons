@@ -44,8 +44,9 @@ public class Pickaxe {
 
     private static void givePickaxe(Player player, ItemStack pick) {
         ItemMeta meta = pick.getItemMeta();
-        if (player.getInventory().addItem(pick).size() == 0) {
-            Translate.sendMessage(player, "prisons.keys.receive", meta.getDisplayName().substring(0, 2), meta.getDisplayName());
-        }
+
+        InventoryUtil.giveItem(player, pick);
+
+        Translate.sendMessage(player, "prisons.keys.receive", meta.getDisplayName().substring(0, 2), meta.getDisplayName());
     }
 }
