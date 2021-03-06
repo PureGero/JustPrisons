@@ -62,7 +62,266 @@ public class PlayerData {
         Translate.sendMessage(getPlayer(), "prisons.tokens.take", tokens);
         return true;
     }
-
+    
+    /////////////////////////////////
+    public BigInteger getSwordFortune() {
+        if (!object.has("swordFortune")) return BigInteger.ZERO;
+        return object.getBigInteger("swordFortune");
+    }
+    public void setSwordFortune(BigInteger fortune) {
+        object.put("swordFortune", fortune);
+    }
+    
+    public BigInteger getSwordLuck() {
+        if (!object.has("swordLuck")) return BigInteger.ZERO;
+        return object.getBigInteger("swordLuck");
+    }
+    public void setSwordLuck(BigInteger luck) {
+        object.put("swordLuck", luck);
+    }
+    
+    public BigInteger getSwordDamage() {
+        if (!object.has("swordDamage")) return BigInteger.ZERO;
+        return object.getBigInteger("swordDamage");
+    }
+    public void setSwordDamage(BigInteger damage) {
+        object.put("swordDamage", damage);
+    }
+    
+    public BigInteger getSwordLooting() {
+        if (!object.has("swordLooting")) return BigInteger.ZERO;
+        return object.getBigInteger("swordLooting");
+    }
+    public void setSwordLooting(BigInteger looting) {
+        object.put("swordLooting", looting);
+    }
+    
+    public BigInteger getSwordSpeed() {
+        if (!object.has("swordSpeed")) return BigInteger.ZERO;
+        return object.getBigInteger("swordSpeed");
+    }
+    public void setSwordSpeed(BigInteger speed) {
+        object.put("swordSpeed", speed);
+    }
+    
+    public BigInteger getSwordCharity() {
+        if (!object.has("swordCharity")) return BigInteger.ZERO;
+        return object.getBigInteger("swordCharity");
+    }
+    public void setSwordCharity(BigInteger charity) {
+        object.put("swordCharity", charity);
+    }
+    
+    public BigInteger getSwordUnbreaking() {
+        if (!object.has("swordUnbreaking")) return BigInteger.ZERO;
+        return object.getBigInteger("swordUnbreaking");
+    }
+    public void setSwordUnbreaking(BigInteger unbreaking) {
+        object.put("swordUnbreaking", unbreaking);
+    }
+    
+    public BigInteger getSwordLure() {
+        if (!object.has("swordLure")) return BigInteger.ZERO;
+        return object.getBigInteger("swordLure");
+    }
+    public void setSwordLure(BigInteger lure) {
+        object.put("swordLure", lure);
+    }
+    
+    public BigInteger getHelmetProtection() {
+        if (!object.has("helmetProtection")) return BigInteger.ZERO;
+        return object.getBigInteger("helmetProtection");
+    }
+    public void setHelmetProtection(BigInteger protection) {
+        object.put("helmetProtection", protection);
+    }
+    
+    public BigInteger getHelmetBlastProt() {
+        if (!object.has("helmetBlastProt")) return BigInteger.ZERO;
+        return object.getBigInteger("helmetBlastProt");
+    }
+    public void setHelmetBlastProt(BigInteger BlastProt) {
+        object.put("helmetBlastProt", BlastProt);
+    }
+    
+    public BigInteger getHelmetFireProt() {
+        if (!object.has("helmetFireProt")) return BigInteger.ZERO;
+        return object.getBigInteger("helmetFireProt");
+    }
+    public void setHelmetFireProt(BigInteger FireProt) {
+        object.put("helmetFireProt", FireProt);
+    }
+    
+    public BigInteger getHelmetProjProt() {
+        if (!object.has("helmetProjProt")) return BigInteger.ZERO;
+        return object.getBigInteger("helmetProjProt");
+    }
+    public void setHelmetProjProt(BigInteger ProjProt) {
+        object.put("helmetProjProt", ProjProt);
+    }
+    
+    public BigInteger getHelmetUnbreaking() {
+        if (!object.has("helmetUnbreaking")) return BigInteger.ZERO;
+        return object.getBigInteger("helmetUnbreaking");
+    }
+    public void setHelmetUnbreaking(BigInteger unbreaking) {
+        object.put("helmetUnbreaking", unbreaking);
+    }
+    
+    public BigInteger getHelmetThorns() {
+        if (!object.has("helmetThorns")) return BigInteger.ZERO;
+        return object.getBigInteger("helmetThorns");
+    }
+    public void setHelmetThorns(BigInteger Thorns) {
+        object.put("helmetThorns", Thorns);
+    }
+    
+    public BigInteger getChestplateProtection() {
+        if (!object.has("chestplateProtection")) return BigInteger.ZERO;
+        return object.getBigInteger("chestplateProtection");
+    }
+    public void setChestplateProtection(BigInteger protection) {
+        object.put("chestplateProtection", protection);
+    }
+    
+    public BigInteger getChestplateBlastProt() {
+        if (!object.has("chestplateBlastProt")) return BigInteger.ZERO;
+        return object.getBigInteger("chestplateBlastProt");
+    }
+    public void setChestplateBlastProt(BigInteger BlastProt) {
+        object.put("chestplateBlastProt", BlastProt);
+    }
+    
+    public BigInteger getChestplateFireProt() {
+        if (!object.has("chestplateFireProt")) return BigInteger.ZERO;
+        return object.getBigInteger("chestplateFireProt");
+    }
+    public void setChestplateFireProt(BigInteger FireProt) {
+        object.put("chestplateFireProt", FireProt);
+    }
+    
+    public BigInteger getChestplateProjProt() {
+        if (!object.has("chestplateProjProt")) return BigInteger.ZERO;
+        return object.getBigInteger("chestplateProjProt");
+    }
+    public void setChestplateProjProt(BigInteger ProjProt) {
+        object.put("chestplateProjProt", ProjProt);
+    }
+    
+    public BigInteger getChestplateUnbreaking() {
+        if (!object.has("chestplateUnbreaking")) return BigInteger.ZERO;
+        return object.getBigInteger("chestplateUnbreaking");
+    }
+    public void setChestplateUnbreaking(BigInteger unbreaking) {
+        object.put("chestplateUnbreaking", unbreaking);
+    }
+    
+    public BigInteger getChestplateThorns() {
+        if (!object.has("chestplateThorns")) return BigInteger.ZERO;
+        return object.getBigInteger("chestplateThorns");
+    }
+    public void setChestplateThorns(BigInteger Thorns) {
+        object.put("chestplateThorns", Thorns);
+    }
+    
+    public BigInteger getLeggingsProtection() {
+        if (!object.has("leggingsProtection")) return BigInteger.ZERO;
+        return object.getBigInteger("leggingsProtection");
+    }
+    public void setLeggingsProtection(BigInteger protection) {
+        object.put("leggingsProtection", protection);
+    }
+    
+    public BigInteger getLeggingsBlastProt() {
+        if (!object.has("leggingsBlastProt")) return BigInteger.ZERO;
+        return object.getBigInteger("leggingsBlastProt");
+    }
+    public void setLeggingsBlastProt(BigInteger BlastProt) {
+        object.put("leggingsBlastProt", BlastProt);
+    }
+    
+    public BigInteger getLeggingsFireProt() {
+        if (!object.has("leggingsFireProt")) return BigInteger.ZERO;
+        return object.getBigInteger("leggingsFireProt");
+    }
+    public void setLeggingsFireProt(BigInteger FireProt) {
+        object.put("leggingsFireProt", FireProt);
+    }
+    
+    public BigInteger getLeggingsProjProt() {
+        if (!object.has("leggingsProjProt")) return BigInteger.ZERO;
+        return object.getBigInteger("leggingsProjProt");
+    }
+    public void setLeggingsProjProt(BigInteger ProjProt) {
+        object.put("leggingsProjProt", ProjProt);
+    }
+    
+    public BigInteger getLeggingsUnbreaking() {
+        if (!object.has("leggingsUnbreaking")) return BigInteger.ZERO;
+        return object.getBigInteger("leggingsUnbreaking");
+    }
+    public void setLeggingsUnbreaking(BigInteger unbreaking) {
+        object.put("leggingsUnbreaking", unbreaking);
+    }
+    
+    public BigInteger getLeggingsThorns() {
+        if (!object.has("leggingsThorns")) return BigInteger.ZERO;
+        return object.getBigInteger("leggingsThorns");
+    }
+    public void setLeggingsThorns(BigInteger Thorns) {
+        object.put("leggingsThorns", Thorns);
+    }
+    
+    public BigInteger getBootsProtection() {
+        if (!object.has("bootsProtection")) return BigInteger.ZERO;
+        return object.getBigInteger("bootsProtection");
+    }
+    public void setBootsProtection(BigInteger protection) {
+        object.put("bootsProtection", protection);
+    }
+    
+    public BigInteger getBootsBlastProt() {
+        if (!object.has("bootsBlastProt")) return BigInteger.ZERO;
+        return object.getBigInteger("bootsBlastProt");
+    }
+    public void setBootsBlastProt(BigInteger BlastProt) {
+        object.put("bootsBlastProt", BlastProt);
+    }
+    
+    public BigInteger getBootsFireProt() {
+        if (!object.has("bootsFireProt")) return BigInteger.ZERO;
+        return object.getBigInteger("bootsFireProt");
+    }
+    public void setBootsFireProt(BigInteger FireProt) {
+        object.put("bootsFireProt", FireProt);
+    }
+    
+    public BigInteger getBootsProjProt() {
+        if (!object.has("bootsProjProt")) return BigInteger.ZERO;
+        return object.getBigInteger("bootsProjProt");
+    }
+    public void setBootsProjProt(BigInteger ProjProt) {
+        object.put("bootsProjProt", ProjProt);
+    }
+    
+    public BigInteger getBootsUnbreaking() {
+        if (!object.has("bootsUnbreaking")) return BigInteger.ZERO;
+        return object.getBigInteger("bootsUnbreaking");
+    }
+    public void setBootsUnbreaking(BigInteger unbreaking) {
+        object.put("bootsUnbreaking", unbreaking);
+    }
+    
+    public BigInteger getBootsThorns() {
+        if (!object.has("bootsThorns")) return BigInteger.ZERO;
+        return object.getBigInteger("bootsThorns");
+    }
+    public void setBootsThorns(BigInteger Thorns) {
+        object.put("bootsThorns", Thorns);
+    }
+    /////////////////////////////////
+    
+    
     public boolean getStopKeyMessages() {
         if (!object.has("stopKeyMessages")) return false;
         return object.getBoolean("stopKeyMessages");

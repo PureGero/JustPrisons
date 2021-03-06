@@ -1,4 +1,4 @@
-package net.justminecraft.prisons.inventory;
+package net.justminecraft.prisons.inventory.pickaxe;
 
 import net.justminecraft.prisons.Translate;
 import net.justminecraft.prisons.mines.MineListener;
@@ -17,7 +17,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UpgradeGui implements InventoryHolder {
+public class UpgradeGuiPickaxe implements InventoryHolder {
 
     private static final int[] UPGRADE_SLOTS = {3, 5, 10, 16, 28, 34, 39, 41};
 
@@ -27,14 +27,14 @@ public class UpgradeGui implements InventoryHolder {
     private final ItemStack upgrading;
     private final HashMap<Integer, Runnable> callbacks = new HashMap<>();
 
-    public UpgradeGui(Player player, int slot) {
+    public UpgradeGuiPickaxe(Player player, int slot) {
         this.player = player;
         this.slot = slot;
-        this.inventory = Bukkit.createInventory(this, 5 * 9, "Upgrade your pickaxe");
+        this.inventory = Bukkit.createInventory(this, 5 * 9, "Upgrade your Pickaxe");
         this.upgrading = player.getInventory().getItem(slot);
 
-        for (int i = 0; i < UPGRADE_SLOTS.length && i < Upgrade.values().length; i++) {
-            setUpgrade(i, Upgrade.values()[i]);
+        for (int i = 0; i < UPGRADE_SLOTS.length && i < UpgradePickaxe.values().length; i++) {
+            setUpgrade(i, UpgradePickaxe.values()[i]);
         }
 
         setTokens();
@@ -74,7 +74,7 @@ public class UpgradeGui implements InventoryHolder {
 
         ItemStack item = new ItemStack(Material.ANVIL);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Translate.formatMessage(player, "prisons.upgrade.repair"));
+        meta.setDisplayName(Translate.formatMessage(player, "prisons.upgrade.repair.pickaxe"));
 
         ArrayList<String> lore = new ArrayList<>();
         wordWrap(lore, Translate.formatMessage(player, "prisons.upgrade.repair.description", cost), 26);
@@ -93,17 +93,17 @@ public class UpgradeGui implements InventoryHolder {
         }
     }
 
-    private void setUpgrade(int i, Upgrade upgrade) {
+    private void setUpgrade(int i, UpgradePickaxe upgrade) {
         ItemStack item = new ItemStack(upgrade.getIcon());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(String.format("%s%s+%,d %s",
                 upgrade.getColor(),
                 ChatColor.BOLD,
-                Upgrade.getLevel(upgrading, upgrade).add(BigInteger.ONE),
+                UpgradePickaxe.getLevel(upgrading, upgrade).add(BigInteger.ONE),
                 upgrade.getName()));
 
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(Translate.formatMessage(player, "prisons.upgrade.cost", upgrade.getCost(Upgrade.getLevel(upgrading, upgrade))));
+        lore.add(Translate.formatMessage(player, "prisons.upgrade.cost", upgrade.getCost(UpgradePickaxe.getLevel(upgrading, upgrade))));
         wordWrap(lore, upgrade.getDescription(), 26);
         meta.setLore(lore);
 
@@ -113,14 +113,14 @@ public class UpgradeGui implements InventoryHolder {
         callbacks.put(UPGRADE_SLOTS[i], () -> upgrade(i, upgrade));
     }
 
-    private void upgrade(int i, Upgrade upgrade) {
-        if (upgrade == Upgrade.SPEED_BOOST && Upgrade.getLevel(upgrading, upgrade).compareTo(BigInteger.valueOf(3)) >= 0) {
+    private void upgrade(int i, UpgradePickaxe upgrade) {
+        if (upgrade == UpgradePickaxe.SPEED_BOOST && UpgradePickaxe.getLevel(upgrading, upgrade).compareTo(BigInteger.valueOf(3)) >= 0) {
             player.sendMessage(ChatColor.RED + "You have reached the maximum level for speed!");
             return;
         }
 
-        if (PlayerDataManager.get(player).takeTokens(upgrade.getCost(Upgrade.getLevel(upgrading, upgrade)))) {
-            Upgrade.setUpgrade(upgrading, upgrade, Upgrade.getLevel(upgrading, upgrade).add(BigInteger.ONE));
+        if (PlayerDataManager.get(player).takeTokens(upgrade.getCost(UpgradePickaxe.getLevel(upgrading, upgrade)))) {
+            UpgradePickaxe.setUpgrade(upgrading, upgrade, UpgradePickaxe.getLevel(upgrading, upgrade).add(BigInteger.ONE));
             setItem();
             setUpgrade(i, upgrade);
         }

@@ -1,4 +1,4 @@
-package net.justminecraft.prisons.inventory;
+package net.justminecraft.prisons.inventory.chestplate;
 
 import io.github.miraclefoxx.math.BigDecimalMath;
 import net.justminecraft.prisons.mines.MineListener;
@@ -13,15 +13,13 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Upgrade {
-    FORTUNE("Fortune", "Increases the coins you get from mining", ChatColor.GRAY, Enchantment.LOOT_BONUS_BLOCKS),
-    LUCK("Luck", "Increases the chance of finding tokens while mining", ChatColor.DARK_GREEN),
-    EFFICIENCY("Efficiency", "Increases block breaking speed", ChatColor.LIGHT_PURPLE, Enchantment.DIG_SPEED),
-    LOOTING("Looting", "Increases the amount of tokens you get", ChatColor.DARK_RED),
-    SPEED_BOOST("Speed boost", "Increases your walking speed while holding the pickaxe", ChatColor.GOLD),
-    CHARITY("Charity", "A chance of finding a huge sum of tokens", ChatColor.GREEN),
-    UNBREAKING("Unbreaking", "Increases the durability of the pickaxe", ChatColor.DARK_BLUE, Enchantment.DURABILITY),
-    LURE("Lure", "Increases the chance of finding keys while mining", ChatColor.DARK_AQUA),
+public enum UpgradeChestplate {
+    PROTECTION("Protection", "Increases protection against mobs", ChatColor.LIGHT_PURPLE, Enchantment.PROTECTION_ENVIRONMENTAL),
+    BLAST_PROTECTION("Blast Protection", "Increases protection against explosions", ChatColor.DARK_RED, Enchantment.PROTECTION_EXPLOSIONS),
+    FIRE_PROTECTION("Fire Protection", "Increases protection againt fire", ChatColor.GOLD, Enchantment.PROTECTION_FIRE),
+    PROJECTILE_PROTECTION("Projectile Protection", "Increases protection against projectiles", ChatColor.GREEN, Enchantment.PROTECTION_PROJECTILE),
+    UNBREAKING("Unbreaking", "Increases the durability of the chestplate", ChatColor.DARK_BLUE, Enchantment.DURABILITY),
+    THORNS("Thorns", "Increases damage dealt to mobs on attack", ChatColor.DARK_AQUA, Enchantment.THORNS),
     RANKUP_TOKENS("Rankup tokens", "An internal enchantment that determines how many tokens should be received", ChatColor.GOLD);
 
     private final String name;
@@ -29,14 +27,14 @@ public enum Upgrade {
     private final ChatColor color;
     private final Enchantment enchantment;
 
-    Upgrade(String name, String description, ChatColor color) {
+    UpgradeChestplate(String name, String description, ChatColor color) {
         this.name = name;
         this.description = description;
         this.color = color;
         this.enchantment = null;
     }
 
-    Upgrade(String name, String description, ChatColor color, Enchantment enchantment) {
+    UpgradeChestplate(String name, String description, ChatColor color, Enchantment enchantment) {
         this.name = name;
         this.description = description;
         this.color = color;
@@ -59,33 +57,27 @@ public enum Upgrade {
         int scalar = 0;
         int start = 0;
         switch (this) {
-            case FORTUNE:
+            case PROTECTION:
                 scalar = 2;
                 start = 100;
                 break;
-            case LUCK:
-                scalar = 5000;
-                start = 5000;
-                break;
-            case EFFICIENCY:
-                scalar = 1;
-                start = 10;
-                break;
-            case LOOTING:
-                scalar = 50;
+            case BLAST_PROTECTION:
+                scalar = 2;
                 start = 100;
                 break;
-            case SPEED_BOOST:
-                scalar = 5000;
-                start = 5000;
+            case FIRE_PROTECTION:
+                scalar = 2;
+                start = 100;
                 break;
-            case CHARITY:
-                return BigDecimalMath.pow(BigDecimal.valueOf(2), new BigDecimal(level)).multiply(BigDecimal.valueOf(100000 * MineListener.TOKEN_MULTIPLIER)).toBigInteger();
+            case PROJECTILE_PROTECTION:
+                scalar = 2;
+                start = 100;
+                break;
             case UNBREAKING:
                 scalar = 1;
                 start = 10;
                 break;
-            case LURE:
+            case THORNS:
                 scalar = 10000;
                 start = 10000;
                 break;
@@ -98,28 +90,24 @@ public enum Upgrade {
 
     public Material getIcon() {
         switch (this) {
-            case FORTUNE:
-                return Material.GOLD_NUGGET;
-            case LUCK:
-                return Material.BOOK;
-            case EFFICIENCY:
-                return Material.GOLD_PICKAXE;
-            case LOOTING:
-                return Material.EMERALD_BLOCK;
-            case SPEED_BOOST:
-                return Material.FEATHER;
-            case CHARITY:
-                return Material.EMERALD_ORE;
+            case PROTECTION:
+                return Material.BEDROCK;
+            case BLAST_PROTECTION:
+                return Material.TNT;
+            case FIRE_PROTECTION:
+                return Material.TORCH;
+            case PROJECTILE_PROTECTION:
+                return Material.ARROW;
             case UNBREAKING:
                 return Material.ANVIL;
-            case LURE:
-                return Material.TRIPWIRE_HOOK;
+            case THORNS:
+                return Material.DEAD_BUSH;
             default:
                 return Material.STONE;
         }
     }
 
-    public static BigInteger getLevel(ItemStack item, Upgrade upgrade) {
+    public static BigInteger getLevel(ItemStack item, UpgradeChestplate upgrade) {
         ItemMeta meta = item.getItemMeta();
 
         if (meta == null) {
@@ -141,7 +129,7 @@ public enum Upgrade {
         return BigInteger.ZERO;
     }
 
-    public static void setUpgrade(ItemStack item, Upgrade upgrade, BigInteger level) {
+    public static void setUpgrade(ItemStack item, UpgradeChestplate upgrade, BigInteger level) {
         ItemMeta meta = item.getItemMeta();
 
         List<String> lore = meta.getLore();

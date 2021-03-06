@@ -1,4 +1,4 @@
-package net.justminecraft.prisons.inventory;
+package net.justminecraft.prisons.inventory.pickaxe;
 
 import net.justminecraft.prisons.PrisonsPlugin;
 import org.bukkit.Bukkit;
@@ -19,7 +19,7 @@ public class PickaxeTimer implements Runnable {
             ItemStack item = player.getItemInHand();
             if (item == null) continue;
 
-            int speedBoost = Upgrade.getLevel(item, Upgrade.SPEED_BOOST).intValue();
+            int speedBoost = UpgradePickaxe.getLevel(item, UpgradePickaxe.SPEED_BOOST).intValue();
 
             if (speedBoost > 3) {
                 speedBoost = 3;

@@ -1,6 +1,5 @@
 package net.justminecraft.prisons.playerdata;
 
-import net.justminecraft.prisons.inventory.LegacyInventoryConverter;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,7 +23,7 @@ public class PlayerDataListener implements Listener {
         PlayerDataManager.get(event.getPlayer()).getScoreboard().show(event.getPlayer());
 
         // Check for a legacy inventory to convert
-        LegacyInventoryConverter.doConversion(event.getPlayer());
+        net.justminecraft.prisons.inventory.pickaxe.LegacyInventoryConverter.doConversion(event.getPlayer());
 
         // Update permissions
         PlayerDataManager.get(event.getPlayer()).updatePermissions();

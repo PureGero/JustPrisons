@@ -1,6 +1,8 @@
 package net.justminecraft.prisons.inventory;
 
 import net.justminecraft.prisons.Translate;
+import net.justminecraft.prisons.inventory.pickaxe.Pickaxe;
+import net.justminecraft.prisons.inventory.pickaxe.UpgradePickaxe;
 import net.justminecraft.prisons.mines.MineListener;
 import net.justminecraft.prisons.playerdata.PlayerData;
 import net.justminecraft.prisons.playerdata.PlayerDataManager;
@@ -47,7 +49,7 @@ public class Key {
         item.setItemMeta(meta);
 
         if (key.equalsIgnoreCase(LEGENDARY_KEY)) {
-            Upgrade.setUpgrade(item, Upgrade.RANKUP_TOKENS, BigInteger.valueOf(PlayerDataManager.get(player).getRank()));
+            UpgradePickaxe.setUpgrade(item, UpgradePickaxe.RANKUP_TOKENS, BigInteger.valueOf(PlayerDataManager.get(player).getRank()));
         }
 
         if (player.getInventory().addItem(item).size() == 0) {
@@ -107,13 +109,13 @@ public class Key {
         if (meta.getDisplayName().equalsIgnoreCase(LEGENDARY_KEY)) {
             while (Math.random() < 0.05)
                 giveEpicKey(player);
-            if (Math.random() < 0.01 || Upgrade.getLevel(item, Upgrade.RANKUP_TOKENS).compareTo(BigInteger.valueOf(5)) == 0)
+            if (Math.random() < 0.01 || UpgradePickaxe.getLevel(item, UpgradePickaxe.RANKUP_TOKENS).compareTo(BigInteger.valueOf(5)) == 0)
                 Multi.giveMulti(40, player);
-            else if (Math.random() < 0.01 || Upgrade.getLevel(item, Upgrade.RANKUP_TOKENS).compareTo(BigInteger.valueOf(15)) == 0)
+            else if (Math.random() < 0.01 || UpgradePickaxe.getLevel(item, UpgradePickaxe.RANKUP_TOKENS).compareTo(BigInteger.valueOf(15)) == 0)
                 Multi.giveMulti(50, player);
             if (Math.random() < 0.1)
                 Pickaxe.giveLegendPickAxe(player);
-            tokens = Upgrade.getLevel(item, Upgrade.RANKUP_TOKENS).multiply(BigInteger.valueOf(1000 * MineListener.TOKEN_MULTIPLIER));
+            tokens = UpgradePickaxe.getLevel(item, UpgradePickaxe.RANKUP_TOKENS).multiply(BigInteger.valueOf(1000 * MineListener.TOKEN_MULTIPLIER));
         }
 
         if (tokens != null) {

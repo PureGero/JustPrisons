@@ -1,4 +1,4 @@
-package net.justminecraft.prisons.inventory;
+package net.justminecraft.prisons.inventory.pickaxe;
 
 import net.justminecraft.prisons.PrisonsPlugin;
 import org.bukkit.Material;
@@ -8,19 +8,19 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class UpgradeGuiListener implements Listener {
-    public UpgradeGuiListener(PrisonsPlugin plugin) {
+public class UpgradeGuiPickaxeListener implements Listener {
+    public UpgradeGuiPickaxeListener(PrisonsPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getInventory().getHolder() instanceof UpgradeGui) {
+        if (event.getInventory().getHolder() instanceof UpgradeGuiPickaxe) {
             event.setCancelled(true);
 
-            if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof UpgradeGui) {
+            if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof UpgradeGuiPickaxe) {
                 for (int i = 0; i < (event.isShiftClick() ? 10 : 1); i++) {
-                    ((UpgradeGui) event.getClickedInventory().getHolder()).onClick(event.getSlot());
+                    ((UpgradeGuiPickaxe) event.getClickedInventory().getHolder()).onClick(event.getSlot());
                 }
             }
         }
@@ -30,7 +30,7 @@ public class UpgradeGuiListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if (event.getItem() != null && event.getItem().getType() == Material.DIAMOND_PICKAXE
                 && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
-            new UpgradeGui(event.getPlayer(), event.getPlayer().getInventory().getHeldItemSlot());
+            new UpgradeGuiPickaxe(event.getPlayer(), event.getPlayer().getInventory().getHeldItemSlot());
             event.setCancelled(true);
         }
     }

@@ -1,15 +1,8 @@
 package net.justminecraft.prisons.mines;
 
-import io.github.miraclefoxx.math.BigDecimalMath;
-import net.justminecraft.prisons.Translate;
-import net.justminecraft.prisons.inventory.Key;
-import net.justminecraft.prisons.inventory.Upgrade;
-import net.justminecraft.prisons.playerdata.PlayerData;
-import net.justminecraft.prisons.playerdata.PlayerDataManager;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -23,8 +16,16 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import io.github.miraclefoxx.math.BigDecimalMath;
+import net.justminecraft.prisons.Translate;
+import net.justminecraft.prisons.inventory.Key;
+import net.justminecraft.prisons.inventory.pickaxe.UpgradePickaxe;
+import net.justminecraft.prisons.playerdata.PlayerData;
+import net.justminecraft.prisons.playerdata.PlayerDataManager;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 
 public class MineListener implements Listener {
     public static final int TOKEN_MULTIPLIER = 2;
@@ -77,7 +78,7 @@ public class MineListener implements Listener {
 
         // Coins
         BigInteger coinGain = BigInteger.valueOf(MineOres.getBlockValue(event.getBlock().getType())).multiply(
-                item == null ? BigInteger.ONE : Upgrade.getLevel(item, Upgrade.FORTUNE).divide(BigInteger.valueOf(3)).add(BigInteger.ONE));
+                item == null ? BigInteger.ONE : UpgradePickaxe.getLevel(item, UpgradePickaxe.FORTUNE).divide(BigInteger.valueOf(3)).add(BigInteger.ONE));
         playerData.setCoins(playerData.getCoins().add(coinGain.multiply(BigInteger.valueOf(playerData.getMulti()))));
 
         // Remind new players to do /rankup
@@ -99,9 +100,9 @@ public class MineListener implements Listener {
             playerData.setLargestBlockCoinGain(coinGain);
 
         // Tokens
-        BigDecimal chance = BigDecimalMath.pow(BigDecimal.valueOf(1.001), new BigDecimal(Upgrade.getLevel(item, Upgrade.LUCK).add(BigInteger.valueOf(5))).multiply(BigDecimal.valueOf(-1)));
+        BigDecimal chance = BigDecimalMath.pow(BigDecimal.valueOf(1.001), new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LUCK).add(BigInteger.valueOf(5))).multiply(BigDecimal.valueOf(-1)));
         while (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
-            BigDecimal tokens = new BigDecimal(Upgrade.getLevel(item, Upgrade.LOOTING))
+            BigDecimal tokens = new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LOOTING))
                     .multiply(BigDecimal.valueOf(Math.random() * 5))
                     .add(BigDecimal.valueOf(5))
                     .multiply(BigDecimal.valueOf(TOKEN_MULTIPLIER));
@@ -113,15 +114,15 @@ public class MineListener implements Listener {
         // Charity
         //chance = (1-chance)*0.01;
         double charityChance = 3.0e-5;
-        for (int i = 0; i < Upgrade.getLevel(item, Upgrade.CHARITY).intValue(); i++) {
+        for (int i = 0; i < UpgradePickaxe.getLevel(item, UpgradePickaxe.CHARITY).intValue(); i++) {
             if (Math.random() < charityChance) {
-                BigDecimal tokensSmall = new BigDecimal(Upgrade.getLevel(item, Upgrade.LOOTING))
+                BigDecimal tokensSmall = new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LOOTING))
                         .multiply(BigDecimal.valueOf(Math.random() * 5))
                         .add(BigDecimal.valueOf(5))
                         .multiply(BigDecimal.valueOf(TOKEN_MULTIPLIER));
                 BigDecimal tokensLarge = tokensSmall.multiply(BigDecimal.valueOf(Math.random() * 900 + 100));
-                tokensSmall = tokensSmall.multiply(new BigDecimal(Upgrade.getLevel(item, Upgrade.CHARITY))).multiply(BigDecimal.TEN);
-                tokensLarge = tokensLarge.multiply(new BigDecimal(Upgrade.getLevel(item, Upgrade.CHARITY)).multiply(BigDecimal.valueOf(0.2)).add(BigDecimal.ONE));
+                tokensSmall = tokensSmall.multiply(new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.CHARITY))).multiply(BigDecimal.TEN);
+                tokensLarge = tokensLarge.multiply(new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.CHARITY)).multiply(BigDecimal.valueOf(0.2)).add(BigDecimal.ONE));
                 for (Player receiver : Bukkit.getOnlinePlayers()) {
                     if (receiver != player) {
                         Translate.sendMessage(receiver, "prisons.charity.broadcast", tokensSmall.toBigInteger(), player.getName(), tokensLarge.toBigInteger());
@@ -135,7 +136,7 @@ public class MineListener implements Listener {
         }
 
         // Keys
-        chance = BigDecimalMath.pow(BigDecimal.valueOf(1.0005), new BigDecimal(Upgrade.getLevel(item, Upgrade.LURE)).multiply(BigDecimal.valueOf(-1)));
+        chance = BigDecimalMath.pow(BigDecimal.valueOf(1.0005), new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LURE)).multiply(BigDecimal.valueOf(-1)));
         if (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
             if (Math.random() < 0.8) {
                 Key.giveCommonKey(player);
@@ -157,7 +158,7 @@ public class MineListener implements Listener {
 
         mine.onBlockBreak();
 
-        if (new BigDecimal(Upgrade.getLevel(item, Upgrade.UNBREAKING)).add(BigDecimal.ONE).multiply(BigDecimal.valueOf(Math.random())).compareTo(BigDecimal.ONE) < 0) {
+        if (new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.UNBREAKING)).add(BigDecimal.ONE).multiply(BigDecimal.valueOf(Math.random())).compareTo(BigDecimal.ONE) < 0) {
             item.setDurability((short) (item.getDurability() + 1));
             if (item.getType() == Material.GOLD_PICKAXE && item.getDurability() > 32) {
                 player.getWorld().playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);

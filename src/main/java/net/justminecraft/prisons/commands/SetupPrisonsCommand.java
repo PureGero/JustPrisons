@@ -27,7 +27,7 @@ public class SetupPrisonsCommand implements CommandExecutor {
         sender.sendMessage(ChatColor.RED + "Disabled due to how long this takes to run (like 30mins)\nPlease re-enable it in net.justminecraft.prisons.commands.SetupPrisonsCommand");
 
         // Commented out to disable it
-        //new PrisonsSetup(plugin);
+        new PrisonsSetup(plugin);
 
         return true;
     }

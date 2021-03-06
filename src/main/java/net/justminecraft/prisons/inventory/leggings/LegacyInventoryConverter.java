@@ -1,4 +1,4 @@
-package net.justminecraft.prisons.inventory;
+package net.justminecraft.prisons.inventory.leggings;
 
 import net.justminecraft.prisons.playerdata.PlayerData;
 import net.justminecraft.prisons.playerdata.PlayerDataManager;
@@ -17,18 +17,16 @@ import java.util.HashMap;
  */
 public class LegacyInventoryConverter {
 
-    private static HashMap<Integer, Upgrade> upgradeMap = new HashMap<>();
+    private static HashMap<Integer, UpgradeLeggings> upgradeMap = new HashMap<>();
 
     static {
-        upgradeMap.put(21, Upgrade.LOOTING);
-        upgradeMap.put(32, Upgrade.EFFICIENCY);
-        upgradeMap.put(34, Upgrade.UNBREAKING);
-        upgradeMap.put(35, Upgrade.FORTUNE);
-        upgradeMap.put(62, Upgrade.LURE);
-        upgradeMap.put(-1, Upgrade.CHARITY);
-        upgradeMap.put(-2, Upgrade.SPEED_BOOST);
-        upgradeMap.put(-3, Upgrade.LUCK);
-        upgradeMap.put(-4, Upgrade.RANKUP_TOKENS);
+        upgradeMap.put(21, UpgradeLeggings.PROJECTILE_PROTECTION);
+        upgradeMap.put(32, UpgradeLeggings.FIRE_PROTECTION);
+        upgradeMap.put(34, UpgradeLeggings.UNBREAKING);
+        upgradeMap.put(35, UpgradeLeggings.PROTECTION);
+        upgradeMap.put(62, UpgradeLeggings.THORNS);
+        upgradeMap.put(-3, UpgradeLeggings.BLAST_PROTECTION);
+        upgradeMap.put(-4, UpgradeLeggings.RANKUP_TOKENS);
     }
 
     public static void doConversion(Player player) {
@@ -68,9 +66,9 @@ public class LegacyInventoryConverter {
             JSONArray enchanments = item.getJSONArray("ench");
             for (int j = 0; j < enchanments.length(); j++) {
                 JSONObject enchanment = enchanments.getJSONObject(j);
-                Upgrade upgrade = upgradeMap.get(enchanment.getInt("id"));
+                UpgradeLeggings upgrade = upgradeMap.get(enchanment.getInt("id"));
                 if (upgrade != null) {
-                    Upgrade.setUpgrade(itemStack, upgrade, enchanment.getBigInteger("lvl"));
+                    UpgradeLeggings.setUpgrade(itemStack, upgrade, enchanment.getBigInteger("lvl"));
                 } else {
                     itemStack.addUnsafeEnchantment(Enchantment.getById(enchanment.getInt("id")), enchanment.getInt("lvl"));
                 }

@@ -2,6 +2,8 @@ package net.justminecraft.prisons.setup;
 
 import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.arenas.Arena;
+
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
@@ -19,6 +21,10 @@ public class PrisonsSetup implements Runnable {
 
         for (Mine mine : plugin.getMineManager().getMines()) {
             queue(new MineSetup(this, mine));
+        }
+        
+        for (Arena arena : plugin.getArenaManager().getArenas()) {
+            queue(new ArenaSetup(this, arena));
         }
 
         run();
