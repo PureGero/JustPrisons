@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class Translate {
@@ -16,7 +17,7 @@ public class Translate {
     private HashMap<String, String> messages = new HashMap<>();
 
     private Translate(String file) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(PrisonsPlugin.getPlugin().getResource(file)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(PrisonsPlugin.getPlugin().getResource(file), StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.indexOf('=') > 0) {
