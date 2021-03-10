@@ -84,7 +84,7 @@ public class ArenaManager extends GoogleSheet {
             }
 
             if (!key.isEmpty()) {
-                arena = arenas.computeIfAbsent(key, key2 -> new Arena(args[0], nextOffset.clone()));
+                arena = arenas.computeIfAbsent(key, key2 -> new Arena(args[0], nextOffset.add(1000, 0, 0).clone()));
                 keys.add(key);
             }
 
