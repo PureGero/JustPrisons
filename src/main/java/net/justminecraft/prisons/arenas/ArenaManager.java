@@ -93,14 +93,14 @@ public class ArenaManager extends GoogleSheet {
             }
 
             if (!args[1].isEmpty()) {
-                arena.getSpawnLocations().add(new Location(
+                Location spawnLocation = new Location(
                         world,
                         Double.parseDouble(args[1]) + 0.5,
                         Double.parseDouble(args[2]),
                         Double.parseDouble(args[3]) + 0.5,
                         Float.parseFloat(args[4]),
-                        Float.parseFloat(args[5])
-                ).add(arena.getOffset()));
+                        Float.parseFloat(args[5]));
+                arena.getSpawnLocations().add(spawnLocation);
             }
 
         }
