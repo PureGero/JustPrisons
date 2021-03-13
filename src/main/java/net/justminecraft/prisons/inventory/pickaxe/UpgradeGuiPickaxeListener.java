@@ -18,12 +18,29 @@ public class UpgradeGuiPickaxeListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getInventory().getHolder() instanceof UpgradeGuiPickaxe) {
+        if (event.getInventory().getHolder() instanceof UpgradeGuiPickaxe || event.getInventory().getHolder() instanceof UpgradeGui2Pickaxe) {
             event.setCancelled(true);
 
-            if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof UpgradeGuiPickaxe) {
-                for (int i = 0; i < (event.isShiftClick() ? 10 : 1) * (PlayerDataManager.get((Player) event.getWhoClicked()).getUpgradeAmount() == 2 ? 100000000 : PlayerDataManager.get((Player) event.getWhoClicked()).getUpgradeAmount()); i++) {
-                    ((UpgradeGuiPickaxe) event.getClickedInventory().getHolder()).onClick(event.getSlot());
+            if (event.getClickedInventory() != null) {
+                Player player = (Player) event.getWhoClicked();
+                PlayerData playerData = PlayerDataManager.get(player);
+                int multiplier = playerData.getUpgradeAmount() == 2 ? 100000000 : playerData.getUpgradeAmount();
+
+                if(event.getClickedInventory().getHolder() instanceof UpgradeGuiPickaxe) {
+                    for (int i = 0; i < (event.isShiftClick() ? 10 : 1) * multiplier; i++) {
+                        UpgradeGuiPickaxe upgradeGuiPickaxe = (UpgradeGuiPickaxe) event.getClickedInventory().getHolder();
+                        upgradeGuiPickaxe.onClick(event.getSlot());
+                        if(!upgradeGuiPickaxe.canAfford())
+                            break;
+                    }
+                }
+                if(event.getClickedInventory().getHolder() instanceof UpgradeGui2Pickaxe) {
+                    for (int i = 0; i < (event.isShiftClick() ? 10 : 1) * multiplier; i++) {
+                        UpgradeGui2Pickaxe upgradeGui2Pickaxe = (UpgradeGui2Pickaxe) event.getClickedInventory().getHolder();
+                        upgradeGui2Pickaxe.onClick(event.getSlot());
+                        if(!upgradeGui2Pickaxe.canAfford())
+                            break;
+                    }
                 }
             }
         }

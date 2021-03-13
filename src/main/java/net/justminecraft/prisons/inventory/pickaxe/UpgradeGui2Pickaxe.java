@@ -18,7 +18,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UpgradeGuiPickaxe implements InventoryHolder {
+public class UpgradeGui2Pickaxe implements InventoryHolder {
 
     private static final int[] UPGRADE_SLOTS = {3, 5, 10, 16, 28, 34, 39, 41};
 
@@ -29,14 +29,14 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
     private boolean canAffordUpgrade = true;
     private final HashMap<Integer, Runnable> callbacks = new HashMap<>();
 
-    public UpgradeGuiPickaxe(Player player, int slot) {
+    public UpgradeGui2Pickaxe(Player player, int slot) {
         this.player = player;
         this.slot = slot;
         this.inventory = Bukkit.createInventory(this, 6 * 9, "Upgrade your Pickaxe");
         this.upgrading = player.getInventory().getItem(slot);
 
-        for (int i = 0; i < UPGRADE_SLOTS.length && i < UpgradePickaxe.values().length; i++) {
-            setUpgrade(i, UpgradePickaxe.values()[i]);
+        for (int i = 0; i < UPGRADE_SLOTS.length && i < Upgrade2Pickaxe.values().length; i++) {
+            setUpgrade(i, Upgrade2Pickaxe.values()[i]);
         }
 
         setTokens();
@@ -44,7 +44,7 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         setRepair();
         setAmount();
 
-        setNextPage();
+        setPreviousPage();
 
         player.openInventory(inventory);
     }
@@ -95,16 +95,16 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         callbacks.put(23, () -> {canAffordUpgrade=false;repair(cost);});
     }
 
-    private void setNextPage() {
+    private void setPreviousPage() {
         ItemStack item = new ItemStack(Material.ARROW);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "Next Page");
+        meta.setDisplayName(ChatColor.GOLD + "Previous Page");
         ArrayList<String> lore = new ArrayList<>();
-        wordWrap(lore, "Go to the next page of upgrades!", 26);
+        wordWrap(lore, "Go to the previous page of upgrades!", 26);
         meta.setLore(lore);
         item.setItemMeta(meta);
-        inventory.setItem(53, item);
-        callbacks.put(53, () -> {canAffordUpgrade=false;new UpgradeGui2Pickaxe(player, slot);});
+        inventory.setItem(45, item);
+        callbacks.put(45, () -> {canAffordUpgrade=false;new UpgradeGuiPickaxe(player, slot);});
     }
 
     private void setAmount() {
@@ -127,17 +127,17 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         }
     }
 
-    private void setUpgrade(int i, UpgradePickaxe upgrade) {
+    private void setUpgrade(int i, Upgrade2Pickaxe upgrade) {
         ItemStack item = new ItemStack(upgrade.getIcon());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(String.format("%s%s+%,d %s",
                 upgrade.getColor(),
                 ChatColor.BOLD,
-                UpgradePickaxe.getLevel(upgrading, upgrade).add(BigInteger.ONE),
+                Upgrade2Pickaxe.getLevel(upgrading, upgrade).add(BigInteger.ONE),
                 upgrade.getName()));
 
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(Translate.formatMessage(player, "prisons.upgrade.cost", upgrade.getCost(UpgradePickaxe.getLevel(upgrading, upgrade))));
+        lore.add(Translate.formatMessage(player, "prisons.upgrade.cost", upgrade.getCost(Upgrade2Pickaxe.getLevel(upgrading, upgrade))));
         wordWrap(lore, upgrade.getDescription(), 26);
         meta.setLore(lore);
 
@@ -146,14 +146,9 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         callbacks.put(UPGRADE_SLOTS[i], () -> upgrade(i, upgrade));
     }
 
-    private void upgrade(int i, UpgradePickaxe upgrade) {
-        if (upgrade == UpgradePickaxe.SPEED_BOOST && UpgradePickaxe.getLevel(upgrading, upgrade).compareTo(BigInteger.valueOf(3)) >= 0) {
-            player.sendMessage(ChatColor.RED + "You have reached the maximum level for speed!");
-            return;
-        }
-
-        if (PlayerDataManager.get(player).takeTokens(upgrade.getCost(UpgradePickaxe.getLevel(upgrading, upgrade)))) {
-            UpgradePickaxe.setUpgrade(upgrading, upgrade, UpgradePickaxe.getLevel(upgrading, upgrade).add(BigInteger.ONE));
+    private void upgrade(int i, Upgrade2Pickaxe upgrade) {
+        if (PlayerDataManager.get(player).takeTokens(upgrade.getCost(Upgrade2Pickaxe.getLevel(upgrading, upgrade)))) {
+            Upgrade2Pickaxe.setUpgrade(upgrading, upgrade, Upgrade2Pickaxe.getLevel(upgrading, upgrade).add(BigInteger.ONE));
             setItem();
             setUpgrade(i, upgrade);
         } else
