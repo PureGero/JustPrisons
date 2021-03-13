@@ -380,6 +380,16 @@ public class PlayerData {
     }
 
 
+    public int getAmountUnlocked() {
+        if(!object.has("amountUnlocked")) return 0;
+        return object.getInt("amountUnlocked");
+    }
+
+    public void addAmountUnlocked() {
+        int amount = getUpgradeAmount() == 5 ? 5 : getAmountUnlocked() + 1;
+        object.put("upgradeAmount", amount);
+    }
+
     /**
      * When the multi started in milliseconds since 1st Jan 1970
      */
@@ -487,10 +497,19 @@ public class PlayerData {
     public void updatePermissions() {
         Player player = getPlayer();
         int rank = getRank();
+        String[] amountPerms = {"five", "ten", "one_hundred", "one_thousand", "max"};
+        int unlockedAmounts = getAmountUnlocked();
 
         for (int i = 0; i <= rank && i < 26; i++) {
             String permission = "prisons." + (char) ('a' + i);
             if (!player.hasPermission(permission)) {
+                player.addAttachment(PrisonsPlugin.getPlugin(), permission, true);
+            }
+        }
+
+        for(int i=0; i < unlockedAmounts && i < amountPerms.length; i++) {
+            String permission = "prison.amount." + amountPerms[i];
+            if(!player.hasPermission(permission)) {
                 player.addAttachment(PrisonsPlugin.getPlugin(), permission, true);
             }
         }

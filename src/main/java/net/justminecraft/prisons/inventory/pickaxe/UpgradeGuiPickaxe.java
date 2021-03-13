@@ -26,6 +26,7 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
     private final int slot;
     private final Inventory inventory;
     private final ItemStack upgrading;
+    private boolean canAffordUpgrade = true;
     private final HashMap<Integer, Runnable> callbacks = new HashMap<>();
 
     public UpgradeGuiPickaxe(Player player, int slot) {
@@ -43,6 +44,8 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         setRepair();
         setAmount();
 
+        setNextPage();
+
         player.openInventory(inventory);
     }
 
@@ -50,6 +53,10 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         if (callbacks.containsKey(slot)) {
             callbacks.get(slot).run();
         }
+    }
+
+    public boolean canAfford() {
+        return canAffordUpgrade;
     }
 
     private void setTokens() {
@@ -85,7 +92,9 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         item.setItemMeta(meta);
         inventory.setItem(23, item);
 
-        callbacks.put(23, () -> repair(cost));
+        callbacks.put(23, () -> {canAffordUpgrade=false;repair(cost);});
+    }
+
     }
 
     private void setAmount() {
@@ -98,7 +107,7 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         meta.setLore(lore);
         item.setItemMeta(meta);
         inventory.setItem(49, item);
-        callbacks.put(49, () -> new AmountGui(player, slot, this.inventory));
+        callbacks.put(49, () -> {canAffordUpgrade=false;new AmountGui(player, slot, this.inventory);});
     }
 
     private void repair(int cost) {
@@ -124,7 +133,6 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
 
         item.setItemMeta(meta);
         inventory.setItem(UPGRADE_SLOTS[i], item);
-
         callbacks.put(UPGRADE_SLOTS[i], () -> upgrade(i, upgrade));
     }
 
@@ -138,7 +146,8 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
             UpgradePickaxe.setUpgrade(upgrading, upgrade, UpgradePickaxe.getLevel(upgrading, upgrade).add(BigInteger.ONE));
             setItem();
             setUpgrade(i, upgrade);
-        }
+        } else
+            canAffordUpgrade = false;
     }
 
     private void wordWrap(ArrayList<String> lore, String description, int length) {

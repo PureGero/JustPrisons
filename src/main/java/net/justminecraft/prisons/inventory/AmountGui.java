@@ -35,15 +35,6 @@ public class AmountGui implements InventoryHolder {
         initialize();
     }
 
-    public AmountGui(Player player, int slot, Inventory returnInventory, int currentAmount) {
-        this.player = player;
-        this.slot = slot;
-        this.inventory = Bukkit.createInventory(this, 3 * 9, "Amount to Buy");
-        this.returnInventory = returnInventory;
-        this.currentAmount = currentAmount;
-        initialize();
-    }
-
     private void initialize() {
         for(int i = 0; i < AMOUNT_SLOTS.length && i < Amount.values().length; i++) {
             setAmount(i, Amount.values()[i]);
@@ -101,32 +92,30 @@ public class AmountGui implements InventoryHolder {
 
         inventory.setItem(AMOUNT_SLOTS[i], item);
         if(!available)
-            callbacks.put(i, () -> amount(amount));
+            callbacks.put(AMOUNT_SLOTS[i], () -> amount(amount));
     }
 
     private void amount(Amount amount) {
-        int am = currentAmount;
         switch (amount) {
             case ONE:
-                am = 1;
+                currentAmount = 1;
                 break;
             case FIVE:
-                am = 5;
+                currentAmount = 5;
                 break;
             case TEN:
-                am = 10;
+                currentAmount = 10;
                 break;
             case ONE_HUNDRED:
-                am = 100;
+                currentAmount = 100;
                 break;
             case ONE_THOUSAND:
-                am = 1000;
+                currentAmount = 1000;
                 break;
             case MAX:
-                am = 2;
+                currentAmount = 2;
                 break;
         }
-        currentAmount = am;
         setCurrentAmount();
     }
 
