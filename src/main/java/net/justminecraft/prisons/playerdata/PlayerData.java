@@ -368,6 +368,19 @@ public class PlayerData {
     }
 
     /**
+     * Get the amount of upgrades to buy at a time
+     */
+    public int getUpgradeAmount() {
+        if(!object.has("upgradeAmount")) return 1;
+        return object.getInt("upgradeAmount");
+    }
+
+    public void setUpgradeAmount(int amount) {
+        object.put("upgradeAmount", amount);
+    }
+
+
+    /**
      * When the multi started in milliseconds since 1st Jan 1970
      */
     public long getMultiStart() {

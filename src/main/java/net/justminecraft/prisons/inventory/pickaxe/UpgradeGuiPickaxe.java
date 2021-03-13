@@ -1,6 +1,7 @@
 package net.justminecraft.prisons.inventory.pickaxe;
 
 import net.justminecraft.prisons.Translate;
+import net.justminecraft.prisons.inventory.AmountGui;
 import net.justminecraft.prisons.mines.MineListener;
 import net.justminecraft.prisons.playerdata.PlayerData;
 import net.justminecraft.prisons.playerdata.PlayerDataManager;
@@ -30,7 +31,7 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
     public UpgradeGuiPickaxe(Player player, int slot) {
         this.player = player;
         this.slot = slot;
-        this.inventory = Bukkit.createInventory(this, 5 * 9, "Upgrade your Pickaxe");
+        this.inventory = Bukkit.createInventory(this, 6 * 9, "Upgrade your Pickaxe");
         this.upgrading = player.getInventory().getItem(slot);
 
         for (int i = 0; i < UPGRADE_SLOTS.length && i < UpgradePickaxe.values().length; i++) {
@@ -40,6 +41,7 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         setTokens();
         setItem();
         setRepair();
+        setAmount();
 
         player.openInventory(inventory);
     }
@@ -84,6 +86,19 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         inventory.setItem(23, item);
 
         callbacks.put(23, () -> repair(cost));
+    }
+
+    private void setAmount() {
+        ItemStack item = new ItemStack(Material.GOLD_BLOCK);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GOLD + "Buy Amount");
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GREEN + "Current: " + PlayerDataManager.get(player).getUpgradeAmount());
+        wordWrap(lore, "Set the amount of upgrades to buy per click!", 26);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inventory.setItem(49, item);
+        callbacks.put(49, () -> new AmountGui(player, slot, this.inventory));
     }
 
     private void repair(int cost) {

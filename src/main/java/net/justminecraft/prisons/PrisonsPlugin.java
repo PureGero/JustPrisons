@@ -1,5 +1,6 @@
 package net.justminecraft.prisons;
 
+import net.justminecraft.prisons.inventory.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,10 +18,6 @@ import net.justminecraft.prisons.commands.StopKeyUseMessagesCommand;
 import net.justminecraft.prisons.commands.StopTokenMessagesCommand;
 import net.justminecraft.prisons.commands.WarpCommand;
 import net.justminecraft.prisons.customloot.LootManager;
-import net.justminecraft.prisons.inventory.KeyListener;
-import net.justminecraft.prisons.inventory.MultiListener;
-import net.justminecraft.prisons.inventory.MultiTimer;
-import net.justminecraft.prisons.inventory.VoteListener;
 import net.justminecraft.prisons.inventory.boots.UpgradeGuiBootsListener;
 import net.justminecraft.prisons.inventory.chestplate.UpgradeGuiChestplateListener;
 import net.justminecraft.prisons.inventory.helmet.UpgradeGuiHelmetListener;
@@ -72,6 +69,7 @@ public class PrisonsPlugin extends JavaPlugin {
         new UpgradeGuiChestplateListener(this);
         new UpgradeGuiLeggingsListener(this);
         new UpgradeGuiBootsListener(this);
+        new AmountListener(this);
         new VoteListener(this);
         new VillagerShopManager(this);
 

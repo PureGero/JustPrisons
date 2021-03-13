@@ -1,7 +1,10 @@
 package net.justminecraft.prisons.inventory.pickaxe;
 
 import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.playerdata.PlayerData;
+import net.justminecraft.prisons.playerdata.PlayerDataManager;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -19,7 +22,7 @@ public class UpgradeGuiPickaxeListener implements Listener {
             event.setCancelled(true);
 
             if (event.getClickedInventory() != null && event.getClickedInventory().getHolder() instanceof UpgradeGuiPickaxe) {
-                for (int i = 0; i < (event.isShiftClick() ? 10 : 1); i++) {
+                for (int i = 0; i < (event.isShiftClick() ? 10 : 1) * (PlayerDataManager.get((Player) event.getWhoClicked()).getUpgradeAmount() == 2 ? 100000000 : PlayerDataManager.get((Player) event.getWhoClicked()).getUpgradeAmount()); i++) {
                     ((UpgradeGuiPickaxe) event.getClickedInventory().getHolder()).onClick(event.getSlot());
                 }
             }
