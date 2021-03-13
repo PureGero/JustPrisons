@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Upgrade2Pickaxe {
+    MULTI_MINE("Multi Mine", "Chance to mine multiple blocks at once", ChatColor.GREEN);
 
     private final String name;
     private final String description;

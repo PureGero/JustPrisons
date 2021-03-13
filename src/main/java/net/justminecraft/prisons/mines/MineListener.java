@@ -2,11 +2,13 @@ package net.justminecraft.prisons.mines;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.inventory.pickaxe.Upgrade2Pickaxe;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,6 +32,11 @@ import net.md_5.bungee.api.chat.HoverEvent;
 public class MineListener implements Listener {
     public static final int TOKEN_MULTIPLIER = 2;
     private final MineManager mineManager;
+
+    private HashMap<Player, Integer> multiMineProtector = new HashMap<>();
+    private ArrayList<Player> multiMineCoolDown = new ArrayList<>();
+
+    ArrayList<Material> bannedMultiMineMaterials = new ArrayList<>(Arrays.asList(Material.AIR, Material.BARRIER, Material.BEDROCK, Material.GLOWSTONE));
 
     public MineListener(MineManager mineManager) {
         this.mineManager = mineManager;
@@ -135,6 +142,14 @@ public class MineListener implements Listener {
             }
         }
 
+        // Multi Mine
+        runMultiMine(item, event.getBlock().getLocation().clone().add(1,0,0), player);
+        runMultiMine(item, event.getBlock().getLocation().clone().add(0,1,0), player);
+        runMultiMine(item, event.getBlock().getLocation().clone().add(0,0,1), player);
+        runMultiMine(item, event.getBlock().getLocation().clone().add(-1,0,0), player);
+        runMultiMine(item, event.getBlock().getLocation().clone().add(0,-1,0), player);
+        runMultiMine(item, event.getBlock().getLocation().clone().add(0,0,-1), player);
+
         // Keys
         chance = BigDecimalMath.pow(BigDecimal.valueOf(1.0005), new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LURE)).multiply(BigDecimal.valueOf(-1)));
         if (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
@@ -167,5 +182,30 @@ public class MineListener implements Listener {
                 player.setItemInHand(item);
             }
         }
+    }
+
+    private void runMultiMine(ItemStack item, Location l, Player player) {
+        double multiMineChance = 1.0e-2;
+        if(bannedMultiMineMaterials.contains(l.getBlock().getType())) return;
+        if(multiMineProtector.containsKey(player) && multiMineProtector.get(player) > 1000) {
+            if(multiMineCoolDown.contains(player)) return;
+            multiMineCoolDown.add(player);
+            PrisonsPlugin.getPlugin().getServer().getScheduler().runTaskLater(PrisonsPlugin.getPlugin(), () -> {multiMineCoolDown.remove(player); multiMineProtector.remove(player);}, 20);
+        } else
+            for(int i = 0; i < Upgrade2Pickaxe.getLevel(item, Upgrade2Pickaxe.MULTI_MINE).intValue(); i++) {
+                if(Math.random() < multiMineChance) {
+                    BlockBreakEvent b = new BlockBreakEvent(l.getBlock(), player);
+                    try {
+                        Bukkit.getPluginManager().callEvent(b);
+                        if(multiMineProtector.containsKey(player))
+                            multiMineProtector.replace(player, multiMineProtector.get(player) + 1);
+                        else
+                            multiMineProtector.put(player, 1);
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+            }
     }
 }
