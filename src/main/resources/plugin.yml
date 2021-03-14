@@ -33,6 +33,9 @@ commands:
   warp:
     description: Prisons warp command
     permission: prisons.warp
+  pay:
+    description: Pay another player coins or tokens
+    permission: prisons.balance
 permissions:
   prisons.balance:
     default: true

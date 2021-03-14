@@ -1,5 +1,6 @@
 package net.justminecraft.prisons;
 
+import net.justminecraft.prisons.commands.*;
 import net.justminecraft.prisons.inventory.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,15 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.justminecraft.prisons.arenas.ArenaManager;
 import net.justminecraft.prisons.arenas.PopulateMainArena;
-import net.justminecraft.prisons.commands.BalanceCommand;
-import net.justminecraft.prisons.commands.PrestigeCommand;
-import net.justminecraft.prisons.commands.RankupCommand;
-import net.justminecraft.prisons.commands.SetupPrisonsCommand;
-import net.justminecraft.prisons.commands.SpawnCommand;
-import net.justminecraft.prisons.commands.StopKeyMessagesCommand;
-import net.justminecraft.prisons.commands.StopKeyUseMessagesCommand;
-import net.justminecraft.prisons.commands.StopTokenMessagesCommand;
-import net.justminecraft.prisons.commands.WarpCommand;
 import net.justminecraft.prisons.customloot.LootManager;
 import net.justminecraft.prisons.inventory.boots.UpgradeGuiBootsListener;
 import net.justminecraft.prisons.inventory.chestplate.UpgradeGuiChestplateListener;
@@ -100,6 +92,7 @@ public class PrisonsPlugin extends JavaPlugin {
         new StopKeyUseMessagesCommand(this);
         new StopTokenMessagesCommand(this);
         new WarpCommand(this);
+        new PayCommand(this);
     }
 
     public MineManager getMineManager() {
