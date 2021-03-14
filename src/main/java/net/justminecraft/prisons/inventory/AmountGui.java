@@ -67,7 +67,7 @@ public class AmountGui implements InventoryHolder {
     private void setCurrentAmount() {
         ItemStack item = new ItemStack(Material.GHAST_TEAR);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.AQUA + "Amount: " + currentAmount);
+        meta.setDisplayName(ChatColor.AQUA + "Amount: " + (currentAmount == 2 ? "Max" : currentAmount));
         ArrayList<String> lore = new ArrayList<>();
         wordWrap(lore, "Amount that will be bought when an upgrade is purchased.", 26);
         meta.setLore(lore);
@@ -79,19 +79,28 @@ public class AmountGui implements InventoryHolder {
         ItemStack item = new ItemStack(amount.getIcon());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(amount.getColor() + amount.getName());
-        boolean available = amount.getPermission() != null && player.hasPermission(amount.getPermission());
+        boolean available = false;
         ArrayList<String> lore = new ArrayList<>();
-        if(available) {
-            lore.add(ChatColor.RED + "You do not have this unlocked yet!");
+
+        if(amount.getPermission() == null) {
+            available = true;
         } else {
+            if(player.hasPermission(amount.getPermission())) {
+                available = true;
+            }
+        }
+
+        if(available) {
             wordWrap(lore, amount.getDescription(), 26);
+        } else {
+            lore.add(ChatColor.RED + "You do not have this unlocked yet!");
         }
 
         meta.setLore(lore);
         item.setItemMeta(meta);
 
         inventory.setItem(AMOUNT_SLOTS[i], item);
-        if(!available)
+        if(available)
             callbacks.put(AMOUNT_SLOTS[i], () -> amount(amount));
     }
 

@@ -113,6 +113,8 @@ public class Key {
                 Multi.giveMulti(40, player);
             else if (Math.random() < 0.01 || UpgradePickaxe.getLevel(item, UpgradePickaxe.RANKUP_TOKENS).compareTo(BigInteger.valueOf(15)) == 0)
                 Multi.giveMulti(50, player);
+            else if (data.getAmountUnlocked() < 5 && Math.random() < 0.05)
+                addUpgradeAmount(player);
             if (Math.random() < 0.1)
                 Pickaxe.giveLegendPickAxe(player);
             tokens = UpgradePickaxe.getLevel(item, UpgradePickaxe.RANKUP_TOKENS).multiply(BigInteger.valueOf(1000 * MineListener.TOKEN_MULTIPLIER));
@@ -127,5 +129,12 @@ public class Key {
         }
     }
 
-
+    private static void addUpgradeAmount(Player player) {
+        PlayerData data = PlayerDataManager.get(player);
+        int unlocked = data.getAmountUnlocked();
+        if(unlocked < 5) {
+            data.addAmountUnlocked();
+            Translate.sendMessage(player, "prisons.keys.receive", ChatColor.BOLD.toString(), "Purchase Amount Upgrade");
+        }
+    }
 }

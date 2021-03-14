@@ -112,7 +112,7 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GOLD + "Buy Amount");
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GREEN + "Current: " + PlayerDataManager.get(player).getUpgradeAmount());
+        lore.add(ChatColor.GREEN + "Current: " + (PlayerDataManager.get(player).getUpgradeAmount() == 2 ? "Max" : PlayerDataManager.get(player).getUpgradeAmount()));
         wordWrap(lore, "Set the amount of upgrades to buy per click!", 26);
         meta.setLore(lore);
         item.setItemMeta(meta);

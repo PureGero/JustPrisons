@@ -386,8 +386,9 @@ public class PlayerData {
     }
 
     public void addAmountUnlocked() {
-        int amount = getUpgradeAmount() == 5 ? 5 : getAmountUnlocked() + 1;
-        object.put("upgradeAmount", amount);
+        int amount = getAmountUnlocked() + 1;
+        object.put("amountUnlocked", amount);
+        updatePermissions();
     }
 
     /**
@@ -507,8 +508,13 @@ public class PlayerData {
             }
         }
 
+        for(int i =0; i < amountPerms.length; i++) {
+            String permission = "prisons.amount." + amountPerms[i];
+            player.addAttachment(PrisonsPlugin.getPlugin(), permission, false);
+        }
+
         for(int i=0; i < unlockedAmounts && i < amountPerms.length; i++) {
-            String permission = "prison.amount." + amountPerms[i];
+            String permission = "prisons.amount." + amountPerms[i];
             if(!player.hasPermission(permission)) {
                 player.addAttachment(PrisonsPlugin.getPlugin(), permission, true);
             }
