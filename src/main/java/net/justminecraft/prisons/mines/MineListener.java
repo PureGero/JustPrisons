@@ -187,7 +187,7 @@ public class MineListener implements Listener {
     private void runMultiMine(ItemStack item, Location l, Player player) {
         double multiMineChance = 1.0e-2;
         if(bannedMultiMineMaterials.contains(l.getBlock().getType())) return;
-        if(multiMineProtector.containsKey(player) && multiMineProtector.get(player) > 1000) {
+        if(multiMineProtector.containsKey(player) && multiMineProtector.get(player) > 5000) {
             if(multiMineCoolDown.contains(player)) return;
             multiMineCoolDown.add(player);
             PrisonsPlugin.getPlugin().getServer().getScheduler().runTaskLater(PrisonsPlugin.getPlugin(), () -> {multiMineCoolDown.remove(player); multiMineProtector.remove(player);}, 20);
@@ -196,7 +196,7 @@ public class MineListener implements Listener {
                 if(Math.random() < multiMineChance) {
                     BlockBreakEvent b = new BlockBreakEvent(l.getBlock(), player);
                     try {
-                        Bukkit.getPluginManager().callEvent(b);
+                        PrisonsPlugin.getPlugin().getServer().getScheduler().runTaskLater(PrisonsPlugin.getPlugin(), () -> Bukkit.getPluginManager().callEvent(b), 1);
                         if(multiMineProtector.containsKey(player))
                             multiMineProtector.replace(player, multiMineProtector.get(player) + 1);
                         else
