@@ -247,14 +247,6 @@ public class SpawnListener implements Listener {
     }
 
     @EventHandler
-    public void onKick(PlayerKickEvent event) {
-        if (event.getReason().equalsIgnoreCase("disconnect.spam")) {
-            // Disable vanilla's disconnect for spamming tab completion (an issue for 1.13+ clients)
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
     public void onThrowItem(PlayerDropItemEvent event) {
         if (event.getItemDrop().getItemStack() != null && event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE) {
             event.getPlayer().sendMessage(ChatColor.RED + "You cannot throw your Pickaxe!");
