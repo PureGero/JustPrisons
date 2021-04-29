@@ -43,11 +43,11 @@ public class SpawnListener implements Listener {
 
     private static Map<String, Location> portals = new HashMap<>();
     static {
-        portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.GREEN, new Location(Bukkit.getWorlds().get(0), 15, 61, 36));
-        portals.put(ChatColor.AQUA + "Arenas", new Location(Bukkit.getWorlds().get(0), 8, 61, 36));
-        portals.put(ChatColor.GREEN + "Mines", new Location(Bukkit.getWorlds().get(0), 0, 61, 36));
-        portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.RED, new Location(Bukkit.getWorlds().get(0), -8, 61, 36));
-        portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.YELLOW, new Location(Bukkit.getWorlds().get(0), -15, 61, 36));
+        portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.GREEN, new Location(Bukkit.getWorlds().get(0), 15, 62, 36));
+        portals.put(ChatColor.AQUA + "Arenas", new Location(Bukkit.getWorlds().get(0), 8, 62, 36));
+        portals.put(ChatColor.GREEN + "Mines", new Location(Bukkit.getWorlds().get(0), 0, 62, 36));
+        portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.RED, new Location(Bukkit.getWorlds().get(0), -8, 62, 36));
+        portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.YELLOW, new Location(Bukkit.getWorlds().get(0), -15, 62, 36));
     }
 
     private final SpawnManager spawnManager;
@@ -62,7 +62,7 @@ public class SpawnListener implements Listener {
 
     public static void summonArmourStand(String name, Location location) {
         for (Entity entity : location.getWorld().getEntities()) {
-            if (name.equals(entity.getCustomName())) {
+            if (name.equals(entity.getCustomName()) || entity.getLocation().distanceSquared(location) < 1) {
                 entity.remove();
             }
         }
