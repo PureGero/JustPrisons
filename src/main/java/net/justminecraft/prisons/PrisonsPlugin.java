@@ -2,6 +2,7 @@ package net.justminecraft.prisons;
 
 import net.justminecraft.prisons.commands.*;
 import net.justminecraft.prisons.inventory.*;
+import net.justminecraft.prisons.plots.PlotManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,9 +31,10 @@ public class PrisonsPlugin extends JavaPlugin {
 
     private MineManager mineManager;
     private ArenaManager arenaManager;
-    static LootManager lootManager;
+    private LootManager lootManager;
+    private PlotManager plotManager;
     
-    public PopulateMainArena PopulateMain = new PopulateMainArena(arenaManager);
+    private final PopulateMainArena populateMain = new PopulateMainArena(arenaManager);
 
     public static void info(String format, Object... args) {
         getPlugin().getLogger().info(String.format(format, args));
@@ -49,6 +51,7 @@ public class PrisonsPlugin extends JavaPlugin {
         mineManager = new MineManager(this);
         arenaManager = new ArenaManager(this);
         lootManager = new LootManager(this);
+        plotManager = new PlotManager(this);
         new MultiListener(this);
         new MultiTimer(this);
         new PickaxeTimer(this);
@@ -71,7 +74,7 @@ public class PrisonsPlugin extends JavaPlugin {
         
         this.getServer().getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                PopulateMain.Populate(player);
+                populateMain.Populate(player);
             }
         }, 1, 1);
     }
@@ -98,10 +101,16 @@ public class PrisonsPlugin extends JavaPlugin {
     public MineManager getMineManager() {
         return mineManager;
     }
+    
     public ArenaManager getArenaManager() {
         return arenaManager;
     }
+    
     public LootManager getLootManager() {
         return lootManager;
+    }
+
+    public PlotManager getPlotManager() {
+        return plotManager;
     }
 }

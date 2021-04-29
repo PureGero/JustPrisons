@@ -14,7 +14,6 @@ import com.sk89q.worldedit.regions.selector.CuboidRegionSelector;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldedit.world.registry.WorldData;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -45,7 +44,7 @@ public class WorldEditUtil {
             editSession.setFastMode(true);
 
             Pattern air = new Pattern() {
-                private BaseBlock baseBlock = new BaseBlock(0);
+                private final BaseBlock baseBlock = new BaseBlock(0);
 
                 @Override
                 public BaseBlock apply(Vector vector) {
@@ -66,6 +65,11 @@ public class WorldEditUtil {
     }
 
     public static void pasteSchematic(String file, Location location) {
+        pasteSchematic(file, location, false);
+    }
+
+    public static void pasteSchematic(String file, Location location, boolean ignoreAirBlocks) {
+        long t = System.currentTimeMillis();
         System.out.println("Pasting schematic " + file + " at " + location);
 
         World world = new BukkitWorld(location.getWorld());
@@ -85,10 +89,10 @@ public class WorldEditUtil {
             ClipboardHolder holder = new ClipboardHolder(clipboard, worldData);
 
             Vector to = new Vector(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-            Operation operation = holder.createPaste(editSession, editSession.getWorld().getWorldData()).to(to).ignoreAirBlocks(false).build();
+            Operation operation = holder.createPaste(editSession, editSession.getWorld().getWorldData()).to(to).ignoreAirBlocks(ignoreAirBlocks).build();
             Operations.completeLegacy(operation);
 
-            Bukkit.getWorlds().get(0).setSpawnLocation(0, 64, 0);
+            System.out.println("Pasted schematic " + file + " (" + (System.currentTimeMillis() - t) + "ms)");
         } catch (IOException | MaxChangedBlocksException e) {
             throw new RuntimeException(e);
         }

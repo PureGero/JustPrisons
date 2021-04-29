@@ -1,16 +1,16 @@
 package net.justminecraft.prisons.spawn;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.justminecraft.prisons.PrisonsPlugin;
+import net.justminecraft.prisons.inventory.Multi;
+import net.justminecraft.prisons.inventory.boots.UpgradeBoots;
+import net.justminecraft.prisons.inventory.chestplate.UpgradeChestplate;
+import net.justminecraft.prisons.inventory.helmet.UpgradeHelmet;
+import net.justminecraft.prisons.inventory.leggings.UpgradeLeggings;
+import net.justminecraft.prisons.inventory.pickaxe.UpgradePickaxe;
+import net.justminecraft.prisons.inventory.sword.UpgradeSword;
+import net.justminecraft.prisons.playerdata.PlayerData;
+import net.justminecraft.prisons.playerdata.PlayerDataManager;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -22,31 +22,24 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-import net.justminecraft.prisons.PrisonsPlugin;
-import net.justminecraft.prisons.inventory.Multi;
-import net.justminecraft.prisons.inventory.boots.UpgradeBoots;
-import net.justminecraft.prisons.inventory.chestplate.UpgradeChestplate;
-import net.justminecraft.prisons.inventory.helmet.UpgradeHelmet;
-import net.justminecraft.prisons.inventory.leggings.UpgradeLeggings;
-import net.justminecraft.prisons.inventory.pickaxe.UpgradePickaxe;
-import net.justminecraft.prisons.inventory.sword.UpgradeSword;
-import net.justminecraft.prisons.playerdata.PlayerData;
-import net.justminecraft.prisons.playerdata.PlayerDataManager;
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SpawnListener implements Listener {
 
-    private static Map<String, Location> portals = new HashMap<>();
+    private static final Map<String, Location> portals = new HashMap<>();
     static {
         portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.GREEN, new Location(Bukkit.getWorlds().get(0), 15, 62, 36));
         portals.put(ChatColor.AQUA + "Arenas", new Location(Bukkit.getWorlds().get(0), 8, 62, 36));
         portals.put(ChatColor.GREEN + "Mines", new Location(Bukkit.getWorlds().get(0), 0, 62, 36));
-        portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.RED, new Location(Bukkit.getWorlds().get(0), -8, 62, 36));
+        portals.put(ChatColor.GOLD + "Plots", new Location(Bukkit.getWorlds().get(0), -8, 62, 36));
         portals.put(ChatColor.GRAY + "Coming soon" + ChatColor.YELLOW, new Location(Bukkit.getWorlds().get(0), -15, 62, 36));
     }
 
@@ -98,6 +91,10 @@ public class SpawnListener implements Listener {
                 if (closest.getCustomName().contains("Arenas")) {
                     teleportToArenas(event.getPlayer());
                 }
+
+                if (closest.getCustomName().contains("Plots")) {
+                    teleportToPlots(event.getPlayer());
+                }
             }
         }
     }
@@ -122,6 +119,11 @@ public class SpawnListener implements Listener {
         player.sendMessage(ChatColor.GREEN + "Teleported to The Pit");
     }
 
+    private void teleportToPlots(Player player) {
+        player.teleport(PrisonsPlugin.getPlugin().getPlotManager().getPlotSpawnLocation(player));
+        player.sendMessage(ChatColor.GREEN + "Teleported to your plot");
+    }
+
     @EventHandler
     public void onSpawn(PlayerSpawnLocationEvent event) {
         event.setSpawnLocation(spawnManager.getWorld().getSpawnLocation().add(Math.random(), 0, Math.random()));
@@ -139,7 +141,7 @@ public class SpawnListener implements Listener {
 
             ItemMeta sword_meta = starterSword.getItemMeta();
             sword_meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Starter Sword");
-            sword_meta.setLore(new ArrayList<>(Arrays.asList("", ChatColor.WHITE + "Right-click this sword to upgrade it")));
+            sword_meta.setLore(Arrays.asList("", ChatColor.WHITE + "Right-click this sword to upgrade it"));
             starterSword.setItemMeta(sword_meta);
 
             UpgradeSword.setUpgrade(starterSword, UpgradeSword.DAMAGE, BigInteger.TEN);
@@ -152,7 +154,7 @@ public class SpawnListener implements Listener {
 
             ItemMeta pickaxe_meta = starterPickaxe.getItemMeta();
             pickaxe_meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Starter Pickaxe");
-            pickaxe_meta.setLore(new ArrayList<>(Arrays.asList("", ChatColor.WHITE + "Right-click this pickaxe to upgrade it")));
+            pickaxe_meta.setLore(Arrays.asList("", ChatColor.WHITE + "Right-click this pickaxe to upgrade it"));
             starterPickaxe.setItemMeta(pickaxe_meta);
 
             UpgradePickaxe.setUpgrade(starterPickaxe, UpgradePickaxe.EFFICIENCY, BigInteger.TEN);
@@ -165,7 +167,7 @@ public class SpawnListener implements Listener {
 
             ItemMeta helmet_meta = starterHelmet.getItemMeta();
             helmet_meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Starter Helmet");
-            helmet_meta.setLore(new ArrayList<>(Arrays.asList("", ChatColor.WHITE + "Right-click this helmet to upgrade it")));
+            helmet_meta.setLore(Arrays.asList("", ChatColor.WHITE + "Right-click this helmet to upgrade it"));
             starterHelmet.setItemMeta(helmet_meta);
 
             UpgradeHelmet.setUpgrade(starterHelmet, UpgradeHelmet.PROTECTION, BigInteger.TEN);
@@ -178,7 +180,7 @@ public class SpawnListener implements Listener {
 
             ItemMeta chestplate_meta = starterChestplate.getItemMeta();
             chestplate_meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Starter Chestplate");
-            chestplate_meta.setLore(new ArrayList<>(Arrays.asList("", ChatColor.WHITE + "Right-click this chestplate to upgrade it")));
+            chestplate_meta.setLore(Arrays.asList("", ChatColor.WHITE + "Right-click this chestplate to upgrade it"));
             starterChestplate.setItemMeta(chestplate_meta);
 
             UpgradeChestplate.setUpgrade(starterChestplate, UpgradeChestplate.PROTECTION, BigInteger.TEN);
@@ -191,7 +193,7 @@ public class SpawnListener implements Listener {
 
             ItemMeta leggings_meta = starterLeggings.getItemMeta();
             leggings_meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Starter Leggings");
-            leggings_meta.setLore(new ArrayList<>(Arrays.asList("", ChatColor.WHITE + "Right-click this leggings to upgrade it")));
+            leggings_meta.setLore(Arrays.asList("", ChatColor.WHITE + "Right-click these leggings to upgrade them"));
             starterLeggings.setItemMeta(leggings_meta);
 
             UpgradeLeggings.setUpgrade(starterLeggings, UpgradeLeggings.PROTECTION, BigInteger.TEN);
@@ -204,7 +206,7 @@ public class SpawnListener implements Listener {
 
             ItemMeta boots_meta = starterBoots.getItemMeta();
             boots_meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Starter Boots");
-            boots_meta.setLore(new ArrayList<>(Arrays.asList("", ChatColor.WHITE + "Right-click this boots to upgrade it")));
+            boots_meta.setLore(Arrays.asList("", ChatColor.WHITE + "Right-click these boots to upgrade them"));
             starterBoots.setItemMeta(boots_meta);
 
             UpgradeBoots.setUpgrade(starterBoots, UpgradeBoots.PROTECTION, BigInteger.TEN);
@@ -274,7 +276,7 @@ public class SpawnListener implements Listener {
         }
         
         if (event.getItemDrop().getItemStack() != null && event.getItemDrop().getItemStack().getType() == Material.DIAMOND_BOOTS) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You cannot throw your Bootss!");
+            event.getPlayer().sendMessage(ChatColor.RED + "You cannot throw your Boots!");
             event.setCancelled(true);
         }
     }
