@@ -23,8 +23,8 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>purenetwork-repo</id>
-            <url>https://github.com/PureGero/JustSkyblock/raw/dependencies/</url>
+            <id>clojars.org</id>
+            <url>https://repo.clojars.org</url>
         </repository>
         <repository>
             <id>enginehub-repo</id>
@@ -39,6 +39,14 @@
         </repository>
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>clojars</id>
+            <name>Clojars repository</name>
+            <url>https://repo.clojars.org</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.json</groupId>
@@ -49,19 +57,16 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>puregero</groupId>
-            <artifactId>purenetworkapi</artifactId>
-            <version>1</version>
-            <scope>provided</scope>
+            <groupId>puregero.network</groupId>
+            <artifactId>purenetwork-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
             <version>6.1</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.github.miraclefoxx</groupId>
