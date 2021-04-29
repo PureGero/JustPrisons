@@ -2,15 +2,20 @@ package net.justminecraft.prisons.plots;
 
 import net.justminecraft.prisons.PrisonsPlugin;
 import net.justminecraft.prisons.WorldEditUtil;
+import net.justminecraft.prisons.mines.Mine;
+import net.justminecraft.prisons.mines.MineBoundary;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlotManager {
     private final PrisonsPlugin plugin;
+    private final Map<World, Mine> cachedMines = new HashMap<>();
 
     public PlotManager(PrisonsPlugin plugin) {
         this.plugin = plugin;
@@ -69,6 +74,9 @@ public class PlotManager {
             WorldEditUtil.pasteSchematic("prison_plot.schematic", world.getSpawnLocation(), true);
         }
         
+        // Setup the mine
+        getMine(world).reset();
+        
         return world;
     }
 
@@ -76,7 +84,31 @@ public class PlotManager {
         return world.getName().startsWith("plot-");
     }
 
+    public boolean isInsideMine(Location location) {
+        return location.getBlockZ() >= 107;
+    }
+
     public boolean isInsideBuildArea(Block block) {
         return block.getX() >= -50 && block.getX() <= 50 && block.getZ() >= 7 && block.getZ() < 107;
+    }
+
+    public Mine getMine(World world) {
+        return cachedMines.computeIfAbsent(world, key ->
+                new Mine(
+                        key.getName(),
+                        new Location(key, 0, 0, 0),
+                        new Location(key, 0, 150, 115),
+                        new MineBoundary(new Location(key, -15, 134, 122), new Location(key, 17, 150, 154))
+                ) {
+                    @Override
+                    public Material getRandomMaterial() {
+                        return Material.NETHERRACK;
+                    }
+                }
+        );
+    }
+    
+    public void removeMine(World world) {
+        cachedMines.remove(world);
     }
 }

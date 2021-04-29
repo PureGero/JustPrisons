@@ -14,12 +14,14 @@ import java.util.HashSet;
 
 public class MineManager extends GoogleSheet {
 
-    private HashMap<String, Mine> mines = new HashMap<>();
-    private Location nextOffset;
-    private World world;
+    private final PrisonsPlugin plugin;
+    private final HashMap<String, Mine> mines = new HashMap<>();
+    private final Location nextOffset;
+    private final World world;
 
     public MineManager(PrisonsPlugin plugin) {
         super(plugin, "1ppUyeRFeEXgazITugzv0349xjk9MNEPQ7Hq3Y1Tw9yg");
+        this.plugin = plugin;
 
         plugin.getServer().getPluginManager().registerEvents(new MineListener(this), plugin);
 
@@ -37,6 +39,10 @@ public class MineManager extends GoogleSheet {
     }
 
     public Mine getMine(Player player) {
+        if (plugin.getPlotManager().isPlotWorld(player.getWorld()) && plugin.getPlotManager().isInsideMine(player.getLocation())) {
+            return plugin.getPlotManager().getMine(player.getWorld());
+        }
+        
         if (player.getWorld() != world) {
             return null;
         }

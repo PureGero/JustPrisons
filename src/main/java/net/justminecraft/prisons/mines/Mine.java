@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Mine {
@@ -21,6 +22,13 @@ public class Mine {
     public Mine(String name, Location offset) {
         this.name = name;
         this.offset = offset;
+    }
+
+    public Mine(String name, Location offset, Location spawnLocation, MineBoundary... boundary) {
+        this.name = name;
+        this.offset = offset;
+        spawnLocations.add(spawnLocation);
+        boundaries.addAll(Arrays.asList(boundary));
     }
 
     public String getName() {
