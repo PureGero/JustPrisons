@@ -2,6 +2,7 @@ package net.justminecraft.prisons;
 
 import net.justminecraft.prisons.commands.*;
 import net.justminecraft.prisons.inventory.*;
+import net.justminecraft.prisons.inventory.blocks.BlockLoot;
 import net.justminecraft.prisons.plots.PlotManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -58,6 +59,7 @@ public class PrisonsPlugin extends JavaPlugin {
         new SwordTimer(this);
         new PlayerDataManager(this);
         new SpawnManager(this);
+        new BlockLoot(this);
         new UpgradeGuiPickaxeListener(this);
         new UpgradeGuiSwordListener(this);
         new UpgradeGuiHelmetListener(this);

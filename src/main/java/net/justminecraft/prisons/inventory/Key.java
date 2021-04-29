@@ -1,6 +1,7 @@
 package net.justminecraft.prisons.inventory;
 
 import net.justminecraft.prisons.Translate;
+import net.justminecraft.prisons.inventory.blocks.BlockLoot;
 import net.justminecraft.prisons.inventory.pickaxe.Pickaxe;
 import net.justminecraft.prisons.inventory.pickaxe.UpgradePickaxe;
 import net.justminecraft.prisons.mines.MineListener;
@@ -84,6 +85,7 @@ public class Key {
                 Multi.giveMulti(5, player);
             else if (Math.random() < 0.02)
                 Multi.giveMulti(10, player);
+            BlockLoot.giveCommonBlock(player);
             tokens = BigInteger.valueOf((long) ((Math.random() * 150 + 50) * MineListener.TOKEN_MULTIPLIER));
         }
         if (meta.getDisplayName().equalsIgnoreCase(RARE_KEY)) {
@@ -93,6 +95,7 @@ public class Key {
                 Multi.giveMulti(15, player);
             else if (Math.random() < 0.01)
                 Multi.giveMulti(20, player);
+            BlockLoot.giveRareBlock(player);
             tokens = BigInteger.valueOf((long) ((Math.random() * 1500 + 500) * MineListener.TOKEN_MULTIPLIER));
         }
         if (meta.getDisplayName().equalsIgnoreCase(EPIC_KEY)) {
@@ -105,6 +108,7 @@ public class Key {
                 Multi.giveMulti(30, player);
             if (Math.random() < 0.05)
                 Pickaxe.giveEpicPickaxe(player);
+            BlockLoot.giveEpicBlock(player);
         }
         if (meta.getDisplayName().equalsIgnoreCase(LEGENDARY_KEY)) {
             while (Math.random() < 0.05)
@@ -117,6 +121,7 @@ public class Key {
                 addUpgradeAmount(player);
             if (Math.random() < 0.1)
                 Pickaxe.giveLegendPickAxe(player);
+            BlockLoot.giveLegendaryBlock(player);
             tokens = UpgradePickaxe.getLevel(item, UpgradePickaxe.RANKUP_TOKENS).multiply(BigInteger.valueOf(1000 * MineListener.TOKEN_MULTIPLIER));
         }
 
