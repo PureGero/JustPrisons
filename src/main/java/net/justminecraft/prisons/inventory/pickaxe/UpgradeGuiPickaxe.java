@@ -149,6 +149,7 @@ public class UpgradeGuiPickaxe implements InventoryHolder {
     private void upgrade(int i, UpgradePickaxe upgrade) {
         if (upgrade == UpgradePickaxe.SPEED_BOOST && UpgradePickaxe.getLevel(upgrading, upgrade).compareTo(BigInteger.valueOf(3)) >= 0) {
             player.sendMessage(ChatColor.RED + "You have reached the maximum level for speed!");
+            canAffordUpgrade = false;
             return;
         }
 
