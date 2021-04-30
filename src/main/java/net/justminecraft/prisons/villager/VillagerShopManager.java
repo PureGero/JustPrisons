@@ -17,6 +17,7 @@ public class VillagerShopManager implements Runnable{
         plugin.getServer().getScheduler().runTaskTimer(plugin, this, 20L, 20L);
 
         new MultiCombineShop(this);
+        new RobotSellerShop(this);
     }
 
     public VillagerShop getVillagerShop(Entity entity) {
