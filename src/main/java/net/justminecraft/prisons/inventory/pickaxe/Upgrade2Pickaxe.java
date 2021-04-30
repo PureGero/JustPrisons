@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Upgrade2Pickaxe {
-    MULTI_MINE("Multi Mine", "Chance to mine multiple blocks at once", ChatColor.GREEN);
+    MULTI_MINE("Multi Mine", "Chance to mine multiple blocks at once", ChatColor.GREEN),
+    EXPLOSION("Explosion BOI", "Chance to explode blocks around you", ChatColor.RED);
 
     private final String name;
     private final String description;
@@ -53,6 +54,10 @@ public enum Upgrade2Pickaxe {
         switch (this) {
             case MULTI_MINE:
                 return BigDecimalMath.pow(BigDecimal.valueOf(2), new BigDecimal(level)).multiply(BigDecimal.valueOf(500000 * MineListener.TOKEN_MULTIPLIER)).toBigInteger();
+            case EXPLOSION:
+                start = 100000;
+                scalar = 100000;
+                break;
         }
         return level
                 .multiply(BigInteger.valueOf(scalar))
@@ -64,6 +69,8 @@ public enum Upgrade2Pickaxe {
         switch (this) {
             case MULTI_MINE:
                 return Material.ARROW;
+            case EXPLOSION:
+                return Material.TNT;
             default:
                 return Material.STONE;
         }

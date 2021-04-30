@@ -83,6 +83,10 @@ public class MineListener implements Listener {
         PlayerData playerData = PlayerDataManager.get(player);
         playerData.setBlocksBroken(playerData.getBlocksBroken().add(BigInteger.ONE));
 
+        runBalance(player, item, playerData);
+
+        BigDecimal chance;
+
         // Coins
         BigInteger coinGain = BigInteger.valueOf(MineOres.getBlockValue(event.getBlock().getType())).multiply(
                 item == null ? BigInteger.ONE : UpgradePickaxe.getLevel(item, UpgradePickaxe.FORTUNE).divide(BigInteger.valueOf(3)).add(BigInteger.ONE));
@@ -105,6 +109,53 @@ public class MineListener implements Listener {
         // Update the largestBlockCoinGain if they're using a diamond pick
         if (item.getType() == Material.DIAMOND_PICKAXE && coinGain.compareTo(playerData.getLargestBlockCoinGain()) > 0)
             playerData.setLargestBlockCoinGain(coinGain);
+
+        // Multi Mine
+        for(int x = -1; x <= 1; x++)
+            for(int y = -1; y <= 1; y++)
+                for(int z = -1; z <= 1; z++)
+                    runMultiMine(item, event.getBlock().getLocation().clone().add(x,y,z), player);
+
+
+        // Explodi boiiiii
+        chance = BigDecimalMath.pow(BigDecimal.valueOf(1.0005), new BigDecimal(Upgrade2Pickaxe.getLevel(item, Upgrade2Pickaxe.EXPLOSION)).multiply(BigDecimal.valueOf(-1)));
+        if (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
+            player.playSound(event.getBlock().getLocation(), Sound.EXPLODE, 1, 1);
+            for(int x = -1; x <= 1; x++) {
+                for(int y = -1; y <= 1; y++) {
+                    for(int z = -1; z <= 1; z++) {
+                        Location l = event.getBlock().getLocation().clone().add(x, y, z);
+                        if(!bannedMultiMineMaterials.contains(l.getBlock().getType())) {
+                            l.getBlock().setType(Material.AIR);
+                            runBalance(player, item, playerData);
+                        }
+                    }
+                }
+            }
+        }
+
+        event.setExpToDrop(0);
+        for (Player otherPlayer : event.getBlock().getWorld().getPlayers()) {
+            if (otherPlayer != player) {
+                otherPlayer.playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, event.getBlock().getType());
+            }
+        }
+        event.getBlock().setType(Material.AIR);
+
+        mine.onBlockBreak();
+
+        if (new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.UNBREAKING)).add(BigDecimal.ONE).multiply(BigDecimal.valueOf(Math.random())).compareTo(BigDecimal.ONE) < 0) {
+            item.setDurability((short) (item.getDurability() + 1));
+            if (item.getType() == Material.GOLD_PICKAXE && item.getDurability() > 32) {
+                player.getWorld().playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);
+                player.setItemInHand(null);
+            } else {
+                player.setItemInHand(item);
+            }
+        }
+    }
+
+    private void runBalance(Player player, ItemStack item, PlayerData playerData) {
 
         // Tokens
         BigDecimal chance = BigDecimalMath.pow(BigDecimal.valueOf(1.001), new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LUCK).add(BigInteger.valueOf(5))).multiply(BigDecimal.valueOf(-1)));
@@ -142,14 +193,6 @@ public class MineListener implements Listener {
             }
         }
 
-        // Multi Mine
-        runMultiMine(item, event.getBlock().getLocation().clone().add(1,0,0), player);
-        runMultiMine(item, event.getBlock().getLocation().clone().add(0,1,0), player);
-        runMultiMine(item, event.getBlock().getLocation().clone().add(0,0,1), player);
-        runMultiMine(item, event.getBlock().getLocation().clone().add(-1,0,0), player);
-        runMultiMine(item, event.getBlock().getLocation().clone().add(0,-1,0), player);
-        runMultiMine(item, event.getBlock().getLocation().clone().add(0,0,-1), player);
-
         // Keys
         chance = BigDecimalMath.pow(BigDecimal.valueOf(1.0005), new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LURE)).multiply(BigDecimal.valueOf(-1)));
         if (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
@@ -161,26 +204,6 @@ public class MineListener implements Listener {
                 Key.giveEpicKey(player);
             }
 
-        }
-
-        event.setExpToDrop(0);
-        for (Player otherPlayer : event.getBlock().getWorld().getPlayers()) {
-            if (otherPlayer != player) {
-                otherPlayer.playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, event.getBlock().getType());
-            }
-        }
-        event.getBlock().setType(Material.AIR);
-
-        mine.onBlockBreak();
-
-        if (new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.UNBREAKING)).add(BigDecimal.ONE).multiply(BigDecimal.valueOf(Math.random())).compareTo(BigDecimal.ONE) < 0) {
-            item.setDurability((short) (item.getDurability() + 1));
-            if (item.getType() == Material.GOLD_PICKAXE && item.getDurability() > 32) {
-                player.getWorld().playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);
-                player.setItemInHand(null);
-            } else {
-                player.setItemInHand(item);
-            }
         }
     }
 
