@@ -11,11 +11,15 @@ public abstract class VillagerShop {
     private Location location;
 
     public VillagerShop(VillagerShopManager manager, Location location) {
+        this(manager, location, new VillagerShopConfig());
+    }
+
+    public VillagerShop(VillagerShopManager manager, Location location, VillagerShopConfig config) {
         this.location = location;
         entity = location.getWorld().spawn(location, Villager.class);
-        entity.setCustomName(getClass().getSimpleName());
-        entity.setCustomNameVisible(true);
-        entity.setProfession(getProfession());
+        entity.setCustomName(config.getName() != null ? config.getName() : getClass().getSimpleName());
+        entity.setCustomNameVisible(config.isNameVisible());
+        entity.setProfession(config.getProfession() != null ? config.getProfession() : getProfession());
 
         manager.registerVillagerShop(this);
     }
