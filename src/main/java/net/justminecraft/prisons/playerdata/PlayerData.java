@@ -371,7 +371,7 @@ public class PlayerData {
      * Get the amount of upgrades to buy at a time
      */
     public int getUpgradeAmount() {
-        if(!object.has("upgradeAmount")) return 1;
+        if (!object.has("upgradeAmount")) return 1;
         return object.getInt("upgradeAmount");
     }
 
@@ -381,7 +381,7 @@ public class PlayerData {
 
 
     public int getAmountUnlocked() {
-        if(!object.has("amountUnlocked")) return 0;
+        if (!object.has("amountUnlocked")) return 0;
         return object.getInt("amountUnlocked");
     }
 
