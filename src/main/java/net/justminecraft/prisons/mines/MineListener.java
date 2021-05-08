@@ -158,7 +158,14 @@ public class MineListener implements Listener {
     private void runBalance(Player player, ItemStack item, PlayerData playerData) {
 
         // Tokens
-        BigDecimal chance = BigDecimalMath.pow(BigDecimal.valueOf(1.001), new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LUCK).add(BigInteger.valueOf(5))).multiply(BigDecimal.valueOf(-1)));
+        BigInteger luckLevel = UpgradePickaxe.getLevel(item, UpgradePickaxe.LUCK).add(BigInteger.valueOf(5));
+        BigDecimal chance = BigDecimal.valueOf(1);
+        while (luckLevel.compareTo(BigInteger.valueOf(100000)) > 0) {
+            chance = chance.multiply(BigDecimalMath.pow(BigDecimal.valueOf(1.001), BigDecimal.valueOf(100000).multiply(BigDecimal.valueOf(-1))));
+            luckLevel = luckLevel.subtract(BigInteger.valueOf(100000));
+        }
+        chance = chance.multiply(BigDecimalMath.pow(BigDecimal.valueOf(1.001), new BigDecimal(luckLevel).multiply(BigDecimal.valueOf(-1))));
+
         while (chance.compareTo(BigDecimal.valueOf(Math.random())) < 0) {
             BigDecimal tokens = new BigDecimal(UpgradePickaxe.getLevel(item, UpgradePickaxe.LOOTING))
                     .multiply(BigDecimal.valueOf(Math.random() * 5))
