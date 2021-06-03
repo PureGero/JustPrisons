@@ -168,6 +168,9 @@ public class PlayerData {
     }
 
     public String getRankText() {
+        if (uuid.toString().equals("d9506d7f-c7d1-440d-abcf-92c5e461a8b7")) {
+            return "Mod*";
+        }
         if(getRank() < 26)
             return Character.toString((char) ('A' + (getRank() % 26)));
         return "P" + (getRank() - 25);

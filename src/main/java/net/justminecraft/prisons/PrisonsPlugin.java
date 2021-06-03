@@ -4,6 +4,7 @@ import net.justminecraft.prisons.commands.*;
 import net.justminecraft.prisons.inventory.*;
 import net.justminecraft.prisons.mines.Mine;
 import net.justminecraft.prisons.mines.MineManager;
+import net.justminecraft.prisons.modsharprank.NewColors;
 import net.justminecraft.prisons.playerdata.PlayerDataManager;
 import net.justminecraft.prisons.spawn.SpawnManager;
 import net.justminecraft.prisons.villager.VillagerShopManager;
@@ -35,6 +36,7 @@ public class PrisonsPlugin extends JavaPlugin {
         new PickaxeTimer(this);
         new PlayerDataManager(this);
         new SpawnManager(this);
+        new NewColors();
         new UpgradeGuiListener(this);
         new VoteListener(this);
         new VillagerShopManager(this);
