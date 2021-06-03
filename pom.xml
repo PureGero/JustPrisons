@@ -37,6 +37,10 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>viaversion-repo</id>
+            <url>https://repo.viaversion.com</url>
+        </repository>
     </repositories>
 
     <distributionManagement>
@@ -75,6 +79,12 @@
             <groupId>io.github.miraclefoxx</groupId>
             <artifactId>bigdecimal-math</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>us.myles</groupId>
+            <artifactId>viaversion</artifactId>
+            <version>3.2.2-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     
