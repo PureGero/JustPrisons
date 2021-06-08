@@ -81,9 +81,9 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>us.myles</groupId>
+            <groupId>com.viaversion</groupId>
             <artifactId>viaversion</artifactId>
-            <version>3.2.2-SNAPSHOT</version>
+            <version>4.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
